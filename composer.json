@@ -1,0 +1,59 @@
+{
+    "name": ":vendor/:package_name",
+    "type": "library",
+    "description": ":package_description",
+    "homepage": ":homepage",
+
+    "keywords": [
+        ":vendor",
+        ":package_name"
+    ],
+
+    "license": "MIT",
+    "authors": [{
+        "name": ":author_name",
+        "email": ":author_email",
+        "homepage": ":author_website",
+        "role": "Developer"
+    }],
+
+    "require": {
+        "php": "^7.1"
+    },
+
+    "require-dev": {
+        "filp/whoops": "^2.5",
+        "phpunit/phpunit": "^8.2",
+        "squizlabs/php_codesniffer": "^3.0",
+        "symfony/var-dumper": "^4.3"
+    },
+
+    "autoload": {
+        "psr-4": {
+            ":vendor_psr4\\:package_psr4\\": "src"
+        }
+    },
+
+    "autoload-dev": {
+        "psr-4": {
+            ":vendor_psr4\\:package_psr4\\": "tests"
+        }
+    },
+
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "test-coverage": "vendor/bin/phpunit --coverage-html coverage",
+        "check-style": "phpcs src tests",
+        "fix-style": "phpcbf src tests"
+    },
+
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        }
+    },
+
+    "config": {
+        "sort-packages": true
+    }
+}
