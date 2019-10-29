@@ -3,12 +3,14 @@ define('COL_DESCRIPTION', 0);
 define('COL_HELP', 1);
 define('COL_DEFAULT', 2);
 
-$name = shell_exec('git config user.name');
-$email = shell_exec('git config user.email');
+$name = trim(shell_exec('git config user.name'));
+$email = trim(shell_exec('git config user.email'));
+
+// exit(var_dump($name, $email));
 
 $fields = [
-    'author_name' => ['Your name', '', ''],
-    'author_github_username' => ['Your Github username', '<username> in https://github.com/username', $name],
+    'author_name' => ['Your name', '', $name],
+    'author_github_username' => ['Your Github username', '<username> in https://github.com/username', ''],
     'author_email' => ['Your email address', '', $email],
     'author_website' => ['Your website', '', 'https://github.com/{author_github_username}'],
 
@@ -141,5 +143,9 @@ echo "Done.\n";
 
 // shell_exec('rm -rf .git');
 // shell_exec('git init');
+
+# echo "Replaced all values and reset git directory, self destructing in 3... 2... 1..."
+
 // shell_exec('rm ' . __FILE__);
+
 // echo "Now you should remove the file '" . basename(__FILE__) . "'.\n";
