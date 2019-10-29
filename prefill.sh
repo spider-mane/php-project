@@ -17,9 +17,10 @@ read -p "Author github username ($username_guess): " author_username
 author_username=${author_username:-$username_guess}
 
 # author website
-author_website_guess="https:\/\/github.com\/${author_username}"
+author_website_guess="https://github.com/${author_username}"
+guess_escaped="https:\/\/github.com\/${author_username}"
 read -p "Author website ($author_website_guess): " author_website
-author_website=${author_website:-$author_website_guess}
+author_website=${author_website:-$guess_escaped}
 
 # vendor name
 read -p "Vendor ($author_username): " vendor_name
@@ -36,9 +37,10 @@ read -p "Package name ($current_directory): " package_name
 package_name=${package_name:-$current_directory}
 
 # package website
-package_website_guess="https:\/\/github.com\/${vendor_github}\/${package_name}"
+package_website_guess="https://github.com/${vendor_github}/${package_name}"
+guess_escaped="https:\/\/github.com\/${vendor_github}\/${package_name}"
 read -p "Package package_website ($package_website_guess): " package_website
-package_website=${package_website:-$package_website_guess}
+package_website=${package_website:-$guess_escaped}
 
 # package description
 read -p "Package description: " package_description
