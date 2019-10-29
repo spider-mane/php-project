@@ -1,11 +1,11 @@
 {
-    "name": ":vendor/:package_name",
+    "name": ":vendor_name/:package_name",
     "description": ":package_description",
     "homepage": ":homepage",
     "license": "MIT",
 
     "keywords": [
-        ":vendor",
+        ":vendor_name",
         ":package_name"
     ],
 

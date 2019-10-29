@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace :vendor_psr4\:package_psr4;
+namespace :vendor_name_psr4\:package_psr4;
 
 class SkeletonClass
 {

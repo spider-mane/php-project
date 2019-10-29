@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 use PHPUnit\Framework\TestCase;
 
-namespace :vendor_psr4\:package_psr4;
+namespace :vendor_name_psr4\:package_psr4;
 
 class ExampleTest extends TestCase
 {
