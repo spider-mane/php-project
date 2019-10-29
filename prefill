@@ -153,7 +153,7 @@ foreach ($files as $f) {
 
 echo shell_exec('sed -i -e "/^\*\*Note:\*\* Replace/d" README.md');
 
-echo "Replaced all values and reset git directory, prefill script self destructing.\n\n\n";
+echo "Replaced all values and reset git directory, prefill file self destructing.\n\n\n";
 
-echo shell_exec('rm ' . basename(__FILE__));
-echo shell_exec('rm ' . basename(__FILE__) . '.sh');
+shell_exec('rm ' . basename(__FILE__) . '.sh');
+shell_exec('rm ' . basename(__FILE__));
