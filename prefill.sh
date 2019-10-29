@@ -21,13 +21,13 @@ author_website_guess="https://github.com/${author_username}"
 read -p "Author website ($author_website_guess): " author_website
 author_website=${author_website:-$author_website_guess}
 
-# vendor
+# vendor name
 read -p "Vendor ($author_username): " vendor_name
 vendor_name=${vendor_name:-$author_username}
 
-# vendor_github
-read -p "Vendor github name ($vendor): " vendor_github
-vendor_github=${vendor_github:-$vendor}
+# vendor github
+read -p "Vendor github name ($vendor_name): " vendor_github
+vendor_github=${vendor_github:-$vendor_name}
 
 # package name
 current_directory=`pwd`
@@ -65,27 +65,27 @@ then
     [[ "$0" = "$BASH_SOURCE" ]] && exit 1 || return 1
 fi
 
+# echo
+
+# rm -rf .git
+# git init
+
 echo
 
-rm -rf .git
-git init
+find -type f -exec sed -i '' -e "s/:author_name/${author_name}/"  {} \;
+find -type f -exec sed -i '' -e "s/:author_email/${author_email}/"  {} \;
+find -type f -exec sed -i '' -e "s/:author_username/${author_username}/"  {} \;
+find -type f -exec sed -i '' -e "s/:author_website/${author_website}/"  {} \;
+find -type f -exec sed -i '' -e "s/:vendor_name/${vendor_name}/"  {} \;
+find -type f -exec sed -i '' -e "s/:vendor_name_github/${vendor_github}/"  {} \;
+find -type f -exec sed -i '' -e "s/:package_name/${package_name}/"  {} \;
+find -type f -exec sed -i '' -e "s/:package_website/${package_website}/"  {} \;
+find -type f -exec sed -i '' -e "s/:package_description/${package_description}/"  {} \;
+find -type f -exec sed -i '' -e "s/:vendor_psr4/${vendor_psr4}/"  {} \;
+find -type f -exec sed -i '' -e "s/:package_psr4/${package_psr4}/"  {} \;
 
-echo
-
-find -type f -exec sed -i -e "s/:author_name/${author_name}/"
-find -type f -exec sed -i -e "s/:author_email/${author_email}/"
-find -type f -exec sed -i -e "s/:author_username/${author_username}/"
-find -type f -exec sed -i -e "s/:author_website/${author_website}/"
-find -type f -exec sed -i -e "s/:vendor_name/${vendor_name}/"
-find -type f -exec sed -i -e "s/:vendor_name_github/${vendor_github}/"
-find -type f -exec sed -i -e "s/:package_name/${package_name}/"
-find -type f -exec sed -i -e "s/:package_website/${package_website}/"
-find -type f -exec sed -i -e "s/:package_description/${package_description}/"
-find -type f -exec sed -i -e "s/:vendor_psr4/${vendor_psr4}/"
-find -type f -exec sed -i -e "s/:package_psr4/${package_psr4}/"
-
-sed -i -e "/^\*\*Note:\*\* Replace/d" README.md
+sed -i '' -e "/^\*\*Note:\*\* Replace/d" README.md
 
 echo "Replaced all values and reset git directory, self destructing in 3... 2... 1..."
 
-rm -- "$0"
+# rm -- "$0"
