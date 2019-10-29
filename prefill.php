@@ -40,13 +40,19 @@ $replacements = [
     ':vendor_name' => function () use (&$values) {
         return $values['vendor_name'];
     },
+    ':vendor_github' => function () use (&$values) {
+        return $values['vendor_github'];
+    },
     ':package_name' => function () use (&$values) {
         return $values['package_name'];
+    },
+    ':package_website' => function () use (&$values) {
+        return $values['package_website'];
     },
     ':package_description' => function () use (&$values) {
         return $values['package_description'];
     },
-    'League\\Skeleton' => function () use (&$values) {
+    'Vendor\\Package' => function () use (&$values) {
         return $values['psr4_namespace'];
     },
 ];
@@ -129,4 +135,4 @@ foreach ($files as $f) {
 }
 
 echo "Done.\n";
-echo "Now you should remove the file '" . basename(__FILE__) . "'.\n";
+// echo "Now you should remove the file '" . basename(__FILE__) . "'.\n";

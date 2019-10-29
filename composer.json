@@ -29,13 +29,13 @@
 
     "autoload": {
         "psr-4": {
-            ":vendor_psr4\\:package_psr4\\": "src"
+            ":vendor_name\\:package_name\\": "src"
         }
     },
 
     "autoload-dev": {
         "psr-4": {
-            ":vendor_psr4\\:package_psr4\\": "tests"
+            ":vendor_name\\:package_name\\": "tests"
         }
     },
 

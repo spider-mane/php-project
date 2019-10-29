@@ -1,6 +1,6 @@
 <?php
 
-namespace :vendor_psr4\:package_psr4;
+namespace Vendor\Package;
 
 class SkeletonClass
 {
