@@ -1,23 +1,25 @@
 <?php
-define('COL_DESCRIPTION', 0);
-define('COL_HELP', 1);
-define('COL_DEFAULT', 2);
+
+################################################################################
+# config
+################################################################################
 
 $name = trim(shell_exec('git config user.name'));
 $email = trim(shell_exec('git config user.email'));
+$package = basename(__DIR__);
 
-// exit(var_dump($name, $email));
+// exit(var_dump($package));
 
 $fields = [
     'author_name' => ['Your name', '', $name],
-    'author_github_username' => ['Your Github username', '<username> in https://github.com/username', ''],
     'author_email' => ['Your email address', '', $email],
+    'author_github_username' => ['Your Github username', '<username> in https://github.com/username', ''],
     'author_website' => ['Your website', '', 'https://github.com/{author_github_username}'],
 
-    'vendor_name' => ['Package vendor', '', '{author_github_username}'],
-    'vendor_github' => ['Vendor github name', '', '{vendor_name}'],
+    'vendor_name' => ['Vendor name', '', '{author_github_username}'],
+    'vendor_github' => ['Vendor github name', '<username> in https://github.com/username', '{vendor_name}'],
 
-    'package_name' => ['Package name', '', ''],
+    'package_name' => ['Package name', '', $package],
     'package_website' => ['Package website', '', 'https://github.com/{vendor_github}/{package_name}'],
     'package_description' => ['Package very short description', '', ''],
 
@@ -61,6 +63,22 @@ $replacements = [
         return $values['psr4_namespace'];
     },
 ];
+
+$files = array_merge(
+    glob(__DIR__ . '/*.md'),
+    glob(__DIR__ . '/*.xml.dist'),
+    glob(__DIR__ . '/composer.json'),
+    glob(__DIR__ . '/src/*.php'),
+    glob(__DIR__ . '/tests/*.php')
+);
+
+################################################################################
+# Process
+################################################################################
+
+define('COL_DESCRIPTION', 0);
+define('COL_HELP', 1);
+define('COL_DEFAULT', 2);
 
 function read_from_console($prompt)
 {
@@ -124,13 +142,9 @@ do {
 } while (($modify = strtolower(read_from_console('Modify files with these values? [y/N/q] '))) != 'y');
 echo "\n";
 
-$files = array_merge(
-    glob(__DIR__ . '/*.md'),
-    glob(__DIR__ . '/*.xml.dist'),
-    glob(__DIR__ . '/composer.json'),
-    glob(__DIR__ . '/src/*.php'),
-    glob(__DIR__ . '/tests/*.php')
-);
+// echo shell_exec('rm -rf .git');
+// echo shell_exec('git init');
+
 foreach ($files as $f) {
     $contents = file_get_contents($f);
     foreach ($replacements as $str => $func) {
@@ -139,12 +153,7 @@ foreach ($files as $f) {
     file_put_contents($f, $contents);
 }
 
-echo "Done.\n";
-
-// shell_exec('rm -rf .git');
-// shell_exec('git init');
-
-# echo "Replaced all values and reset git directory, self destructing in 3... 2... 1..."
+echo "Replaced all values and reset git directory, self destructing in 3... 2... 1...";
 
 // shell_exec('rm ' . __FILE__);
 
