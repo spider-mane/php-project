@@ -17,7 +17,7 @@ read -p "Author github username ($username_guess): " author_username
 author_username=${author_username:-$username_guess}
 
 # author website
-author_website_guess=`https://github.com/${author_username}`
+author_website_guess="https://github.com/{$author_username}"
 read -p "Author website ($author_website_guess): " author_website
 author_website=${author_website:-$author_website_guess}
 
@@ -36,7 +36,7 @@ read -p "Package name ($current_directory): " package_name
 package_name=${package_name:-$current_directory}
 
 # package homepage
-homepage_guess=`https://github.com/${vendor_github}/${package_name}`
+homepage_guess="https://github.com/{$vendor_github}/{$package_name}"
 read -p "Package homepage ($homepage_guess): " homepage
 homepage=${homepage:-$homepage_guess}
 
