@@ -15,11 +15,11 @@ $fields = [
     'author_website' => ['Your website', '', 'https://github.com/{author_github_username}'],
 
     'vendor_name' => ['Vendor name', '', '{author_github_username}'],
-    'vendor_github' => ['Vendor github name', '<username> in https://github.com/username', '{vendor_name}'],
+    'vendor_github' => ['Vendor Github username', '<username> in https://github.com/username', '{vendor_name}'],
 
     'package_name' => ['Package name', '', $package],
     'package_website' => ['Package website', '', 'https://github.com/{vendor_github}/{package_name}'],
-    'package_description' => ['Package very short description', '', ''],
+    'package_description' => ['Package brief description', '', ''],
 
     'psr4_namespace' => ['PSR-4 namespace', 'usually, Vendor\\Package', ''],
 ];
@@ -37,10 +37,10 @@ $replacements = [
         return $values['author_github_username'];
     },
     ':author_website' => function () use (&$values) {
-        return $values['author_website'] ?: ('https://github.com/' . $values['author_github_username']);
+        return $values['author_website'];
     },
     ':author_email' => function () use (&$values) {
-        return $values['author_email'] ?: ($values['author_github_username'] . '@example.com');
+        return $values['author_email'];
     },
     ':vendor_name' => function () use (&$values) {
         return $values['vendor_name'];
@@ -140,8 +140,10 @@ do {
 } while (($modify = strtolower(read_from_console('Modify files with these values? [y/N/q] '))) != 'y');
 echo "\n";
 
-echo shell_exec('rm -rf .git');
-echo shell_exec('git init');
+echo shell_exec('rm -rf .git') . "\n";
+echo shell_exec('git init') . "\n";
+
+echo "editing file content\n";
 
 foreach ($files as $f) {
     $contents = file_get_contents($f);
@@ -151,9 +153,9 @@ foreach ($files as $f) {
     file_put_contents($f, $contents);
 }
 
-echo shell_exec('sed -i -e "/^\*\*Note:\*\* Replace/d" README.md');
+echo shell_exec('sed -i -e "/^\*\*Note:\*\* Replace/d" README.md') . "\n";
 
-echo "Replaced all values and reset git directory, prefill file self destructing.\n\n\n";
+echo "All done! Going away now.\n";
 
 shell_exec('rm ' . basename(__FILE__) . '.sh');
 shell_exec('rm ' . basename(__FILE__));
