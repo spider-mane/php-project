@@ -17,7 +17,7 @@ read -p "Author github username ($username_guess): " author_username
 author_username=${author_username:-$username_guess}
 
 # author website
-author_website_guess="https://github.com/${author_username}"
+author_website_guess=https://github.com/${author_username}
 read -p "Author website ($author_website_guess): " author_website
 author_website=${author_website:-$author_website_guess}
 
@@ -36,7 +36,7 @@ read -p "Package name ($current_directory): " package_name
 package_name=${package_name:-$current_directory}
 
 # package homepage
-homepage_guess="https://github.com/{$vendor_github}/${package_name}"
+homepage_guess=https://github.com/${vendor_github}/${package_name}
 read -p "Package homepage ($homepage_guess): " homepage
 homepage=${homepage:-$homepage_guess}
 
@@ -52,8 +52,8 @@ read -p "Package psr-4: " package_psr4
 echo
 echo -e "Author: $author_name ($author_username, $author_email, $author_website)"
 echo -e "Vendor: $vendor ($vendor_github)"
-echo -e "Package: $package_name <$package_description>"
-echo -e "psr-4 autoload $vendor_psr4\\\\$package_psr4\\\\"
+echo -e "Package: $package_name ($homepage) <$package_description>"
+echo -e "psr-4 autoload: $vendor_psr4\\$package_psr4\\"
 
 echo
 echo "This script will replace the above values in all files in the project directory and reset the git repository."
@@ -72,17 +72,17 @@ git init
 
 echo
 
-find . -type f -exec sed -i '' -e "s/:author_name/$author_name/" {} \;
-find . -type f -exec sed -i '' -e "s/:author_email/$author_email/" {} \;
-find . -type f -exec sed -i '' -e "s/:author_username/$author_username/" {} \;
-find . -type f -exec sed -i '' -e "s/:author_website/$author_website/" {} \;
-find . -type f -exec sed -i '' -e "s/:vendor/$vendor/" {} \;
-find . -type f -exec sed -i '' -e "s/:vendor_github/$vendor_github/" {} \;
-find . -type f -exec sed -i '' -e "s/:package_name/$package_name/" {} \;
-find . -type f -exec sed -i '' -e "s/:homepage/$homepage/" {} \;
-find . -type f -exec sed -i '' -e "s/:package_description/$package_description/" {} \;
-find . -type f -exec sed -i '' -e "s/:vendor_psr4/$vendor_psr4/" {} \;
-find . -type f -exec sed -i '' -e "s/:package_psr4/$package_psr4/" {} \;
+find . -type f -exec sed -i '' -e "s/:author_name/${author_name}/" {} \;
+find . -type f -exec sed -i '' -e "s/:author_email/${author_email}/" {} \;
+find . -type f -exec sed -i '' -e "s/:author_username/${author_username}/" {} \;
+find . -type f -exec sed -i '' -e "s/:author_website/${author_website}/" {} \;
+find . -type f -exec sed -i '' -e "s/:vendor/${vendor}/" {} \;
+find . -type f -exec sed -i '' -e "s/:vendor_github/${vendor_github}/" {} \;
+find . -type f -exec sed -i '' -e "s/:package_name/${package_name}/" {} \;
+find . -type f -exec sed -i '' -e "s/:homepage/${homepage}/" {} \;
+find . -type f -exec sed -i '' -e "s/:package_description/${package_description}/" {} \;
+find . -type f -exec sed -i '' -e "s/:vendor_psr4/${vendor_psr4}/" {} \;
+find . -type f -exec sed -i '' -e "s/:package_psr4/${package_psr4}/" {} \;
 
 sed -i '' -e "/^\*\*Note:\*\* Replace/d" README.md
 

@@ -1,15 +1,14 @@
 {
     "name": ":vendor/:package_name",
-    "type": "library",
     "description": ":package_description",
     "homepage": ":homepage",
+    "license": "MIT",
 
     "keywords": [
         ":vendor",
         ":package_name"
     ],
 
-    "license": "MIT",
     "authors": [{
         "name": ":author_name",
         "email": ":author_email",
