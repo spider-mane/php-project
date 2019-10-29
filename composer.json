@@ -1,7 +1,7 @@
 {
     "name": ":vendor_name/:package_name",
     "description": ":package_description",
-    "homepage": ":homepage",
+    "homepage": ":package_website",
     "license": "MIT",
 
     "keywords": [
