@@ -3,17 +3,20 @@ define('COL_DESCRIPTION', 0);
 define('COL_HELP', 1);
 define('COL_DEFAULT', 2);
 
+$name = shell_exec('git config user.name');
+$email = shell_exec('git config user.email');
+
 $fields = [
     'author_name' => ['Your name', '', ''],
-    'author_github_username' => ['Your Github username', '<username> in https://github.com/username', ''],
-    'author_email' => ['Your email address', '', ''],
+    'author_github_username' => ['Your Github username', '<username> in https://github.com/username', $name],
+    'author_email' => ['Your email address', '', $email],
     'author_website' => ['Your website', '', 'https://github.com/{author_github_username}'],
 
     'vendor_name' => ['Package vendor', '', '{author_github_username}'],
     'vendor_github' => ['Vendor github name', '', '{vendor_name}'],
 
     'package_name' => ['Package name', '', ''],
-    'package_homepage' => ['Package homepage', '', 'https://github.com/{vendor_github}/{package_name}'],
+    'package_website' => ['Package website', '', 'https://github.com/{vendor_github}/{package_name}'],
     'package_description' => ['Package very short description', '', ''],
 
     'psr4_namespace' => ['PSR-4 namespace', 'usually, Vendor\\Package', ''],
@@ -135,4 +138,8 @@ foreach ($files as $f) {
 }
 
 echo "Done.\n";
+
+// shell_exec('rm -rf .git');
+// shell_exec('git init');
+// shell_exec('rm ' . __FILE__);
 // echo "Now you should remove the file '" . basename(__FILE__) . "'.\n";

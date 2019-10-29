@@ -3,11 +3,11 @@
 # rm -rf .git
 # git init
 
-echo
+# echo
 
 php prefill.php
 
-sed -i '' -e "/^\*\*Note:\*\* Replace/d" README.md
+# sed -i '' -e "/^\*\*Note:\*\* Replace/d" README.md
 
 echo "Replaced all values and reset git directory, self destructing in 3... 2... 1..."
 
