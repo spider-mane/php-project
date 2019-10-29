@@ -8,7 +8,7 @@ $name = trim(shell_exec('git config user.name'));
 $email = trim(shell_exec('git config user.email'));
 $package = basename(__DIR__);
 
-// exit(var_dump($package));
+// exit(var_dump($file));
 
 $fields = [
     'author_name' => ['Your name', '', $name],
@@ -153,8 +153,10 @@ foreach ($files as $f) {
     file_put_contents($f, $contents);
 }
 
-echo "Replaced all values and reset git directory, self destructing in 3... 2... 1...";
+echo shell_exec('sed -i -e "/^\*\*Note:\*\* Replace/d" README.md');
 
-// shell_exec('rm ' . __FILE__);
+echo "Replaced all values and reset git directory, prefill script self destructing.\n\n\n";
+
+shell_exec('rm ' . basename(__FILE__));
 
 // echo "Now you should remove the file '" . basename(__FILE__) . "'.\n";
