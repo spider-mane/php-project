@@ -8,8 +8,6 @@ $name = trim(shell_exec('git config user.name'));
 $email = trim(shell_exec('git config user.email'));
 $package = basename(__DIR__);
 
-// exit(var_dump($file));
-
 $fields = [
     'author_name' => ['Your name', '', $name],
     'author_email' => ['Your email address', '', $email],
@@ -142,8 +140,8 @@ do {
 } while (($modify = strtolower(read_from_console('Modify files with these values? [y/N/q] '))) != 'y');
 echo "\n";
 
-// echo shell_exec('rm -rf .git');
-// echo shell_exec('git init');
+echo shell_exec('rm -rf .git');
+echo shell_exec('git init');
 
 foreach ($files as $f) {
     $contents = file_get_contents($f);
@@ -157,7 +155,5 @@ echo shell_exec('sed -i -e "/^\*\*Note:\*\* Replace/d" README.md');
 
 echo "Replaced all values and reset git directory, prefill script self destructing.\n\n\n";
 
-shell_exec('rm ' . basename(__FILE__));
-shell_exec('rm prefill.sh');
-
-// echo "Now you should remove the file '" . basename(__FILE__) . "'.\n";
+echo shell_exec('rm ' . basename(__FILE__));
+echo shell_exec('rm ' . basename(__FILE__) . '.sh');
