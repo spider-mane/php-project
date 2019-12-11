@@ -157,5 +157,4 @@ echo shell_exec('sed -i -e "/^\*\*Note:\*\* Replace/d" README.md') . "\n";
 
 echo "All done! Going away now.\n";
 
-shell_exec('rm ' . basename(__FILE__) . '.sh');
 shell_exec('rm ' . basename(__FILE__));

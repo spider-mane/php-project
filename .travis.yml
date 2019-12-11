@@ -1,31 +1,33 @@
-dist: trusty
 language: php
+dist: trusty
+sudo: false
 
 php:
   - 7.1
   - 7.2
   - 7.3
-  - hhvm
+  - 7.4
+  - nightly
 
-# This triggers builds to run on the new TravisCI infrastructure.
-# See: http://docs.travis-ci.com/user/workers/container-based-infrastructure/
-sudo: false
+matrix:
+  allow_failures:
+    - php: hhvm
+      dist: trusty
+    - php: nightly
+  include:
+    - php: hhvm
+      dist: trusty
+  fast_finish: true
 
-## Cache composer
 cache:
   directories:
     - $HOME/.composer/cache
 
-matrix:
-  include:
-    - php: 7.1
-      env: 'COMPOSER_FLAGS="--prefer-stable --prefer-lowest"'
-
 before_script:
-  - travis_retry composer update ${COMPOSER_FLAGS} --no-interaction --prefer-dist
+  - travis_retry composer update --no-interaction --prefer-dist
 
 script:
-  - vendor/bin/phpcs --standard=psr2 src/
+  - vendor/bin/phpcs --standard=phpcs.xml.dist src/
   - vendor/bin/phpunit --coverage-text --coverage-clover=coverage.clover
 
 after_script:
