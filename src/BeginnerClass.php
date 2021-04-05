@@ -18,7 +18,7 @@ class BeginnerClass
      * @param string $phrase Phrase to return
      * @return string Returns the phrase passed in
      */
-    public function echoPhrase($phrase)
+    public function returnPhrase($phrase)
     {
         return $phrase;
     }

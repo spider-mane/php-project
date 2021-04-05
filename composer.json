@@ -1,7 +1,7 @@
 {
   "name": "webtheory/php-project",
   "type": "project",
-  "description": "Starter package any php project",
+  "description": "Simple starter package for any php project",
   "homepage": "https://github.com/spider-mane/php-project",
   "license": "MIT",
   "authors": [
@@ -30,12 +30,14 @@
     "friendsofphp/php-cs-fixer": "^2.15",
     "mockery/mockery": "^1.4",
     "monolog/monolog": "^1.24",
+    "nunomaduro/collision": "^5.3",
     "phpbench/phpbench": "@dev",
     "phpunit/phpunit": "^9.5",
     "psy/psysh": "^0.10.7",
     "spatie/phpunit-watcher": "^1.12",
     "squizlabs/php_codesniffer": "^3.0",
-    "symfony/var-dumper": "^4.3"
+    "symfony/var-dumper": "^4.3",
+    "vimeo/psalm": "^4.7"
   },
   "autoload": {
     "psr-4": {
@@ -51,12 +53,14 @@
     "test": "vendor/bin/phpunit",
     "watch": "vendor/bin/phpunit-watcher",
     "check": "vendor/bin/phpcs",
-    "fix": "vendor/bin/phpcbf",
+    "fix": "vendor/bin/php-cs-fixer",
+    "analyze": "vendor/bin/psalm",
     "bench": "vendor/bin/phpbench",
     "play": "vendor/bin/psysh",
     "build": [
       "@fix",
       "@check",
+      "@analyze",
       "@test"
     ],
     "post-create-project-cmd": [

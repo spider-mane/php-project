@@ -1,17 +1,15 @@
 {
   "name": ":vendor_name/:package_name",
-  "description": ":plugin_description",
-  "type": "wordpress-plugin",
-  "homepage": ":plugin_website",
+  "description": ":package_description",
+  "type": "library",
+  "homepage": ":package_website",
   "keywords": [
     ":package_name",
-    ":vendor_name",
-    "wordpress",
-    "plugin"
+    ":vendor_name"
   ],
   "authors": [
     {
-      "name": ":plugin_author",
+      "name": ":package_author",
       "email": ":author_email",
       "homepage": ":author_website",
       "role": "Developer"
@@ -19,7 +17,7 @@
   ],
   "autoload": {
     "psr-4": {
-      "PseudoVendor\\PseudoPlugin\\": "src/"
+      "PseudoVendor\\PseudoPackage\\": "src/"
     }
   }
 }

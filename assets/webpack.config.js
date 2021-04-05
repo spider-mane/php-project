@@ -6,15 +6,13 @@ const mode = yargs.mode;
 const jsSrc = "./assets/src/js/index.js";
 const cssSrc = "./assets/src/scss/styles.scss";
 
-const distDir = path.join(__dirname, "assets", "dist");
-const testDir = path.join(__dirname, "tests", "acceptance", "assets");
-const exportDir = mode === "production" ? distDir : testDir;
+const exportDir = path.join(__dirname, "assets", "dist");
 
 module.exports = {
   entry: [jsSrc],
   output: {
     path: exportDir,
-    filename: "plugin.js",
+    filename: "index.js",
   },
   module: {
     rules: [

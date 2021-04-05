@@ -10,13 +10,13 @@ use PseudoVendor\PseudoPackage\BeginnerClass;
 class BeginnerClassTest extends TestCase
 {
     /**
-     * Test the method
+     * Test the BeginnerClass returns phrase
      */
-    public function testTrueIsTrue()
+    public function testReturnsPhraseProvided()
     {
         $phrase = 'Sup Bruh!';
         $class = new BeginnerClass();
 
-        $this->assertEquals($phrase, $class->echoPhrase($phrase));
+        $this->assertEquals($phrase, $class->returnPhrase($phrase));
     }
 }

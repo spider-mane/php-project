@@ -1,4 +1,4 @@
-# Leonidas Plugin Starter
+# Php Starter Project
 
 [![Latest Version on Packagist][ico-version]][link-packagist]
 [![Software License][ico-license]](LICENSE.md)
@@ -7,29 +7,41 @@
 [![Quality Score][ico-code-quality]][link-code-quality]
 [![Total Downloads][ico-downloads]][link-downloads]
 
-Php Project is a simple starting point for php projects forked from `league/skeleton`. It not only provides boilerplate for commonly needed package files, but fills them out for you after asking a few questions.
-
-## Structure
-
-If any of the following are applicable to your project, then the directory structure should follow industry best practices by being named the following.
-
-```
-bin/
-build/
-docs/
-config/
-src/
-tests/
-vendor/
-```
+Php Project is a simple starting point for php projects forked from `thephpleague/skeleton` with a few things grabbed from `spatie/package-skeleton-laravel`. It not only provides boilerplate for commonly needed package files, but can populate their content with your own project details.
 
 ## Install
 
-Via Composer
+You can install via Composer
 
 ```bash
-composer create-project webtheory/php-project
+composer create-project webtheory/php-project project-name
 ```
+
+On Unix/Linux systems, you should automatically be prompted for your project information after installation. If installing on Windows, manually run the `prefill` interactive script from your project root directory by entering:
+
+```bash
+php bin/prefill
+```
+
+## Structure
+
+Some common directories have been included and are merely suggestive. Delete what you don't need and restructure as you wish.
+
+```text
+assets/
+bin/
+build/
+config/
+docs/
+src/
+tests/
+vendor/
+views/
+```
+
+## Fork
+
+If you find that you often make projects with more a more defined structure, you can simply fork "Php Project" and make your own additions. The `prefill` php script is easy to customize and there are even tests (`testprefill` and `testproject`) located in the bin directory you can use to easily check that your customizations are showing up as expected.
 
 ## Change log
 

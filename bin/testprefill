@@ -9,15 +9,20 @@ ini_set('xdebug.var_display_max_data', 1024);
 # Config
 ################################################################################
 $root = dirname(__DIR__, 1);
-$testDir = $root . 'build/test-prefill';
+$testDir = $root . '/build/test-prefill';
 $prefill = $testDir . '/bin/prefill';
 
 $exclude = [
   'build',
   'vendor',
-  'wordpress',
+  'composer.lock',
+  'assets/build',
+  'assets/node_modules',
+  'assets/package-lock.json',
+  '.phpunit.result.cache',
   '.idea',
   '.vscode',
+  glob('*.code-workspace')[0],
 ];
 
 $answers = [
@@ -25,12 +30,9 @@ $answers = [
   'authorEmail' => 'methodman@wutangfinancial.wu',
   'authorGithub' => 'fake-method-man-420',
 
-  'pluginName' => 'Tical',
-  'pluginSlug' => 'tical',
-  'pluginPrefix' => 'tcl',
-  'pluginVersion' => '4.2.0',
-  'pluginWebsite' => 'https://github.com/method-man-420/tical',
-  'pluginDescription' => "Here comes the ruckus, the motherf*cking ruckus. Thousands of cut-throats and crumb-snatching f*ckers Straight from the brain, I'll be giving you the pain, anger Coming from the 36th Chamber, bang! Tical, hitting with the Buddha-Fist style. Shotgun slamming in your chestpiece, plow! Frame is blown all over the terrain. Like a man without no arms you can't hang. Time for a change of the guard. You've been arrested for lyric fraud now you barred. For real, check it, I pull strings like B.B. King on guitar I'm the true Fist of the North Star!",
+  'packageName' => 'tical',
+  'packageWebsite' => 'https://github.com/method-man-420/tical',
+  'packageDescription' => "Straight from the brain, I'll be giving you the pain, anger Coming from the 36th Chamber, bang!",
 
   'psr4Namespace' => "MethodMan\\Tical",
 ];
@@ -52,6 +54,7 @@ if (file_exists($testDir)) {
   shell_exec("chmod -R 777 $testDir && rm -rf -f $testDir");
 }
 shell_exec("$mkdir $testDir && cp -r $copy $testDir");
+// shell_exec("$mkdir $testDir && git clone $root/.git $testDir");
 
 __test_prefill($prefill, $answers);
 

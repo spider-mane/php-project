@@ -1,7 +1,7 @@
 {
   "name": "php-project",
   "version": "0.1.0",
-  "description": "Starter package for creating a Leonidas based WordPress plugin",
+  "description": "Simple starter package for any php project with assets",
   "author": {
     "name": "Chris Williams",
     "email": "spider.mane.web@gmail.com",

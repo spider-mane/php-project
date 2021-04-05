@@ -1,9 +1,9 @@
 {
   "name": ":package_name",
-  "version": ":plugin_version",
-  "description": ":plugin_description",
+  "version": ":package_version",
+  "description": ":package_description",
   "author": {
-    "name": ":plugin_author",
+    "name": ":package_author",
     "email": ":author_email",
     "url": ":author_website"
   }

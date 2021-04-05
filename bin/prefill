@@ -14,13 +14,10 @@ $prefill = PREFILL_DIRECTORY;
 // allow defaults to be passed to script for testing
 $authorName = $authorName ?? trim(shell_exec('git config user.name'));
 $authorEmail = $authorEmail ?? trim(shell_exec('git config user.email'));
-$pluginSlug = $pluginSlug ?? strtolower(str_replace([' ', '_'], '-', basename($root)));
-$pluginName = $pluginName ?? ucwords(str_replace(['-', '_'], ' ', basename($root)));
+$packageName = $packageName ?? strtolower(preg_replace('/[^A-Za-z0-9-]+/', '-', basename($root)));
 
 $authorGithub = $authorGithub ?? '';
-$pluginPrefix = $pluginPrefix ?? '';
-$pluginDescription = $pluginDescription ?? '';
-$pluginVersion = $pluginVersion ?? '0.1.0';
+$packageDescription = $packageDescription ?? '';
 $psr4Namespace = $psr4Namespace ?? '';
 
 $fields = [
@@ -33,14 +30,11 @@ $fields = [
   'vendor_github' => ['Vendor Github username', '<username> in https://github.com/username', '{vendor_name}'],
   'vendor_website' => ['Vendor website', '', 'https://github.com/{vendor_name}'],
 
-  'package_name' => ['Plugin name', '', $pluginName],
-  'package_name' => ['Plugin slug (textdomain)', '', $pluginSlug],
-  'plugin_prefix' => ['Plugin prefix', 'Abbreviated shorthand ideally 3-5 characters', $pluginPrefix],
-  'plugin_version' => ['Plugin version', '', $pluginVersion],
-  'plugin_website' => ['Plugin website', '', 'https://github.com/{vendor_github}/{package_name}'],
-  'plugin_description' => ['Brief description of plugin', '', $pluginDescription],
+  'package_name' => ['Package name', '', $packageName],
+  'package_website' => ['Package website', '', 'https://github.com/{vendor_github}/{package_name}'],
+  'package_description' => ['Brief description of package', '', $packageDescription],
 
-  'psr4_namespace' => ['PSR-4 namespace', 'Vendor\\Plugin', $psr4Namespace],
+  'psr4_namespace' => ['PSR-4 namespace', 'Vendor\\Package', $psr4Namespace],
 ];
 
 $replacements = [
@@ -48,48 +42,23 @@ $replacements = [
   ':vendor_name\\\\:package_name\\\\' => function ($values) {
     return str_replace('\\', '\\\\', $values['psr4_namespace']) . '\\\\';
   },
-  'PseudoVendor\\\\PseudoPlugin\\\\' => function ($values) {
+  'PseudoVendor\\\\PseudoPackage\\\\' => function ($values) {
     return str_replace('\\', '\\\\', $values['psr4_namespace']) . '\\\\';
   },
-  'PseudoVendor\\PseudoPlugin' => function ($values) {
+  'PseudoVendor\\PseudoPackage' => function ($values) {
     return $values['psr4_namespace'];
   },
-  'PseudoPlugin' => function ($values) {
-    return str_replace(['-', '_'], '', str_replace(['_', '-', ' '], '', ucwords($values['package_name'])));
-  },
-  'PseudoVersion' => function ($values) {
-    return str_replace('.', '_', $values['plugin_version']);
-  },
-  'PSEUDO_CONSTANT' => function ($values) {
-    return str_replace('-', '_', strtoupper($values['package_name']));
-  },
-
   // data
   ':package_name' => function ($values) {
     return $values['package_name'];
   },
-  'Pseudo Plugin' => function ($values) {
-    return $values['package_name'];
+  ':package_website' => function ($values) {
+    return $values['package_website'];
   },
-  ':package_name' => function ($values) {
-    return $values['package_name'];
+  ':package_description' => function ($values) {
+    return $values['package_description'];
   },
-  'pseudo-package' => function ($values) {
-    return $values['package_name'];
-  },
-  ':plugin_prefix' => function ($values) {
-    return $values['plugin_prefix'];
-  },
-  ':plugin_version' => function ($values) {
-    return $values['plugin_version'];
-  },
-  ':plugin_website' => function ($values) {
-    return $values['plugin_website'];
-  },
-  ':plugin_description' => function ($values) {
-    return $values['plugin_description'];
-  },
-  ':plugin_author' => function ($values) {
+  ':package_author' => function ($values) {
     return $values['author_name'];
   },
   ':author_username' => function ($values) {
@@ -107,6 +76,9 @@ $replacements = [
   ':vendor_github' => function ($values) {
     return $values['vendor_github'];
   },
+  ':vendor_website' => function ($values) {
+    return $values['vendor_website'];
+  },
   ':system_year' => function () {
     return date('Y');
   }
@@ -123,17 +95,9 @@ $files = array_merge(
   ],
 
   // php boilerplate
-  glob($root . '/boot/*.php'),
-  glob($root . '/config/*.php'),
   glob($root . '/src/*.php'),
-  glob($root . '/src/**/*.php'),
-  glob($root . '/src/**/**/*.php'),
   glob($root . '/tests/*.php'),
   glob($root . '/tests/**/*.php'),
-  glob($root . '/tests/**/**/*.php'),
-  [
-    $root . '/plugin.php',
-  ]
 
   // js boilerplate
 
@@ -146,12 +110,7 @@ $locate = [
 ];
 
 // files where user input needs to be further refined
-$filter = [
-  $root . '/config/plugin.php' => function ($values) {
-    $values['plugin_description'] = addslashes($values['plugin_description']);
-    return $values;
-  }
-];
+$filter = [];
 
 // json files whose contents should be merged with a functional counterpart
 $mergeJsonData = [
@@ -174,12 +133,6 @@ $mergeJsonData = [
 
 // files to rename
 $rename = [
-  'src/PseudoPlugin.php' => function ($values) use ($replacements) {
-    return ($replacements['PseudoPlugin'])($values) . '.php';
-  },
-  'src/Activation/vPseudoVersion.php' => function ($values) use ($replacements) {
-    return 'v' . ($replacements['PseudoVersion'])($values) . '.php';
-  },
   'example.gitattributes' => function () {
     return '.gitattributes';
   },
@@ -278,16 +231,22 @@ foreach ($rename as $file => $renameFile) {
   rename($file, dirname($file) . '/' . $renameFile($values));
 }
 
-// delete prefill files
+// delete prefill files and add .gitkeep if bin is left empty
 shell_exec('rm ' . __FILE__ . " && rm -rf $prefill");
+$bin = array_filter(scandir("$root/bin"), function ($file) {
+  return !in_array($file, ['.', '..']);
+});
+if (empty($bin)) {
+  touch("$root/bin/.gitkeep");
+}
 
-// refresh git repository
+// reset git repository
 shell_exec("rm -rf -f $root/.git && git init $root");
 
 // refresh composer autoload
 shell_exec("composer dump-autoload -d $root");
 
-echo "Done! Thanks for using Leonidas!\n";
+echo "All Done! Happy coding!.\n";
 
 ################################################################################
 # Functions

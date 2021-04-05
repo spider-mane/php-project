@@ -7,7 +7,7 @@
 [![Quality Score][ico-code-quality]][link-code-quality]
 [![Total Downloads][ico-downloads]][link-downloads]
 
-:plugin_description
+:package_description
 
 ## Install
 
@@ -37,7 +37,7 @@ If you discover any security related issues, please email :author_email instead 
 
 ## Credits
 
-* [:plugin_author][link-author]
+* [:package_author][link-author]
 * [All Contributors][link-contributors]
 
 ## License
