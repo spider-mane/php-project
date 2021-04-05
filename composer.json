@@ -1,66 +1,72 @@
 {
-  "name": ":vendor_name/:package_name",
-  "description": ":package_description",
-  "homepage": ":package_website",
+  "name": "webtheory/php-project",
+  "type": "project",
+  "description": "Starter package any php project",
+  "homepage": "https://github.com/spider-mane/php-project",
   "license": "MIT",
-
-  "keywords": [
-    ":vendor_name",
-    ":package_name"
+  "authors": [
+    {
+      "name": "Chris Williams",
+      "email": "spider.mane.web@gmail.com",
+      "homepage": "https://github.com/spider-mane",
+      "role": "Developer"
+    }
   ],
-
-  "authors": [{
-    "name": ":author_name",
-    "email": ":author_email",
-    "homepage": ":author_website",
-    "role": "Developer"
-  }],
-
+  "keywords": [
+    "webtheory",
+    "php-project",
+    "php",
+    "skeleton",
+    "project",
+    "starter",
+    "package"
+  ],
   "require": {
-    "php": "^7.1"
+    "php": "^7.3"
   },
-
   "require-dev": {
+    "fakerphp/faker": "^1.13",
     "filp/whoops": "^2.5",
     "friendsofphp/php-cs-fixer": "^2.15",
+    "mockery/mockery": "^1.4",
+    "monolog/monolog": "^1.24",
     "phpbench/phpbench": "@dev",
-    "phpunit/phpunit": "^8.2",
-    "psy/psysh": "^0.9.9",
+    "phpunit/phpunit": "^9.5",
+    "psy/psysh": "^0.10.7",
     "spatie/phpunit-watcher": "^1.12",
     "squizlabs/php_codesniffer": "^3.0",
     "symfony/var-dumper": "^4.3"
   },
-
   "autoload": {
     "psr-4": {
-      ":vendor_name\\:package_name\\": "src/"
+      "PseudoVendor\\PseudoPackage\\": "src/"
     }
   },
-
   "autoload-dev": {
     "psr-4": {
-      ":vendor_name\\:package_name\\": "tests/"
+      "Tests\\": "tests/unit/"
     }
   },
-
   "scripts": {
     "test": "vendor/bin/phpunit",
-    "watch": "phpunit-watcher watch",
-    "coverage": "vendor/bin/phpunit --coverage-html coverage",
-    "check": "vendor/bin/phpcs src tests",
-    "fix": "vendor/bin/phpcbf src tests",
-    "bench": "vendor/bin/phpbench"
+    "watch": "vendor/bin/phpunit-watcher",
+    "check": "vendor/bin/phpcs",
+    "fix": "vendor/bin/phpcbf",
+    "bench": "vendor/bin/phpbench",
+    "play": "vendor/bin/psysh",
+    "build": [
+      "@fix",
+      "@check",
+      "@test"
+    ],
+    "post-create-project-cmd": [
+      "bin/composer-prefill"
+    ]
   },
-
-  "extra": {
-    "branch-alias": {
-      "dev-master": "1.0-dev"
-    }
-  },
-
   "config": {
-    "preferred-install": "dist",
     "sort-packages": true,
     "process-timeout": 0
-  }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
 }

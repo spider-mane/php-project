@@ -1,0 +1,22 @@
+#!/usr/bin/env php
+<?php
+
+$prompt = 'prefill';
+$file = "bin/$prompt";
+
+$incompatible = [
+  'WINNT' => 'Windows'
+];
+
+if (isset($incompatible[PHP_OS])) {
+  $os = $incompatible[PHP_OS];
+  echo "Composer cannot run the $prompt interactive script on $os. Run $prompt manually by entering 'php $file' in the command line from your project root.\n";
+  exit;
+}
+
+__composer_prefill_run_prefill();
+
+function __composer_prefill_run_prefill()
+{
+  require __DIR__ . '/prefill';
+}

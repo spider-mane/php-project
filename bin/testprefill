@@ -1,0 +1,68 @@
+#!/usr/bin/env php
+<?php
+
+ini_set('xdebug.var_display_max_depth', 10);
+ini_set('xdebug.var_display_max_children', 256);
+ini_set('xdebug.var_display_max_data', 1024);
+
+################################################################################
+# Config
+################################################################################
+$root = dirname(__DIR__, 1);
+$testDir = $root . 'build/test-prefill';
+$prefill = $testDir . '/bin/prefill';
+
+$exclude = [
+  'build',
+  'vendor',
+  'wordpress',
+  '.idea',
+  '.vscode',
+];
+
+$answers = [
+  'authorName' => 'Method Man',
+  'authorEmail' => 'methodman@wutangfinancial.wu',
+  'authorGithub' => 'fake-method-man-420',
+
+  'pluginName' => 'Tical',
+  'pluginSlug' => 'tical',
+  'pluginPrefix' => 'tcl',
+  'pluginVersion' => '4.2.0',
+  'pluginWebsite' => 'https://github.com/method-man-420/tical',
+  'pluginDescription' => "Here comes the ruckus, the motherf*cking ruckus. Thousands of cut-throats and crumb-snatching f*ckers Straight from the brain, I'll be giving you the pain, anger Coming from the 36th Chamber, bang! Tical, hitting with the Buddha-Fist style. Shotgun slamming in your chestpiece, plow! Frame is blown all over the terrain. Like a man without no arms you can't hang. Time for a change of the guard. You've been arrested for lyric fraud now you barred. For real, check it, I pull strings like B.B. King on guitar I'm the true Fist of the North Star!",
+
+  'psr4Namespace' => "MethodMan\\Tical",
+];
+
+################################################################################
+# Run
+################################################################################
+// Windows gets fussy when using mkdir with forward slashes
+$testDir = str_replace('/', DIRECTORY_SEPARATOR, $testDir);
+
+$files = array_filter(scandir($root), function ($file) use ($exclude) {
+  $nav = ['.', '..'];
+  return !in_array($file, array_merge($nav, $exclude));
+});
+$copy = implode(' ', $files);
+$mkdir = PHP_OS === 'WINNT' ? 'mkdir' : 'mkdir -p';
+
+if (file_exists($testDir)) {
+  shell_exec("chmod -R 777 $testDir && rm -rf -f $testDir");
+}
+shell_exec("$mkdir $testDir && cp -r $copy $testDir");
+
+__test_prefill($prefill, $answers);
+
+function __test_prefill(string $test, array $defaults)
+{
+  $gjpgafgapfesahfpfkafgjalkasfkafdkafak = $test;
+  unset($test);
+
+  $jhapadapfhdspahfdpfdaphdspadfpahdpnaf = $defaults;
+  unset($defaults);
+
+  extract($jhapadapfhdspahfdpfdaphdspadfpahdpnaf);
+  require $gjpgafgapfesahfpfkafgjalkasfkafdkafak;
+}

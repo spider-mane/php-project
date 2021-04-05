@@ -1,8 +1,8 @@
 <?php
 
-namespace Vendor\Package;
+namespace PseudoVendor\PseudoPackage;
 
-class SkeletonClass
+class BeginnerClass
 {
     /**
      * Create a new Skeleton Instance.

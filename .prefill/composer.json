@@ -1,0 +1,25 @@
+{
+  "name": ":vendor_name/:package_name",
+  "description": ":plugin_description",
+  "type": "wordpress-plugin",
+  "homepage": ":plugin_website",
+  "keywords": [
+    ":package_name",
+    ":vendor_name",
+    "wordpress",
+    "plugin"
+  ],
+  "authors": [
+    {
+      "name": ":plugin_author",
+      "email": ":author_email",
+      "homepage": ":author_website",
+      "role": "Developer"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "PseudoVendor\\PseudoPlugin\\": "src/"
+    }
+  }
+}

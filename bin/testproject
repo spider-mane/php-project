@@ -1,0 +1,26 @@
+#!/usr/bin/env php
+<?php
+
+$root = dirname(__DIR__, 1);
+$testDir = "$root/build/test-project";
+$project = json_decode(file_get_contents("$root/composer.json"))->name;
+
+$options = getopt('sxi');
+$args = [];
+
+$stability = isset($options['s']) ? 'stable' : 'dev';
+$args[] = "--stability $stability";
+
+if (!isset($options['x'])) {
+  $args[] = '--no-scripts';
+}
+if (!isset($options['i'])) {
+  $args[] = '--no-install';
+}
+
+$args = implode(' ', $args);
+
+if (file_exists($testDir)) {
+  shell_exec("chmod -R 777 $testDir && rm -rf -f $testDir");
+}
+shell_exec("composer create-project $project $testDir $args");
