@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests;
+namespace Tests\Unit;
 
 use PHPUnit\Framework\TestCase;
 use PseudoVendor\PseudoPackage\BeginnerClass;
@@ -12,7 +12,7 @@ class BeginnerClassTest extends TestCase
     /**
      * Test the BeginnerClass returns phrase
      */
-    public function testReturnsPhraseProvided()
+    public function testReturnsProvidedPhrase()
     {
         $phrase = 'Sup Bruh!';
         $class = new BeginnerClass();

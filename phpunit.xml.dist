@@ -14,9 +14,9 @@
   defaultTestSuite="unit"
   executionOrder="depends,defects"
   forceCoversAnnotation="false"
+  printerClass="NunoMaduro\Collision\Adapters\Phpunit\Printer"
   processIsolation="false"
   stopOnFailure="true"
-  testdox="true"
   verbose="true">
 
   <!-- Testsuites -->

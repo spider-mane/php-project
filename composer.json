@@ -15,11 +15,11 @@
   "keywords": [
     "webtheory",
     "php-project",
+    "php-skeleton",
     "php",
     "skeleton",
     "project",
-    "starter",
-    "package"
+    "starter"
   ],
   "require": {
     "php": "^7.3"
@@ -29,7 +29,6 @@
     "filp/whoops": "^2.5",
     "friendsofphp/php-cs-fixer": "^2.15",
     "mockery/mockery": "^1.4",
-    "monolog/monolog": "^1.24",
     "nunomaduro/collision": "^5.3",
     "phpbench/phpbench": "@dev",
     "phpunit/phpunit": "^9.5",
@@ -46,7 +45,8 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "Tests\\": "tests/unit/"
+      "Tests\\Unit\\": "tests/unit/",
+      "Tests\\Acceptance\\": "tests/acceptance/"
     }
   },
   "scripts": {
@@ -57,6 +57,7 @@
     "analyze": "vendor/bin/psalm",
     "bench": "vendor/bin/phpbench",
     "play": "vendor/bin/psysh",
+    "dump": "vendor/bin/var-dump-server",
     "build": [
       "@fix",
       "@check",
