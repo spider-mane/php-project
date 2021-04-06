@@ -43,7 +43,7 @@ views/
 
 ## Development Tools
 
-Php Project gets you started with an array of third-party tools that you may find useful during development. Simply delete any you don't need from the `require-dev` section of your `composer.json` and they'll be uninstalled the next time you run the `composer update` command. Further information and documentation for each tool can be found at the following links.
+Php Project gets you started with an array of third-party tools that you may find useful during development. Simply delete any you don't need from the `require-dev` section of your `composer.json` and they'll be uninstalled the next time you run the `composer update` command. Information and documentation for each can be found at their websites linked below.
 
 - ### Testing
 
@@ -73,7 +73,7 @@ Php Project gets you started with an array of third-party tools that you may fin
 
   - [Php Bench](https://github.com/phpbench/phpbench)
 
-- ### Error Handling and Debugging
+- ### Debugging
 
   - [Symfony VarDumper & VarDumper Server](https://symfony.com/doc/current/components/var_dumper.html)
 
