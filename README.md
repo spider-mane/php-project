@@ -43,31 +43,45 @@ views/
 
 ## Development Tools
 
-Php Project gets you started with an array of third-party tools that you may find useful during development. Further information and documentation can be found at the following links.
+Php Project gets you started with an array of third-party tools that you may find useful during development. Simply delete any you don't need from the `require-dev` section of your `composer.json` and they'll be uninstalled the next time you run the `composer update` command. Further information and documentation for each tool can be found at the following links.
 
-- ### [PHPUnit](https://phpunit.de/)
+- ### Testing
 
-- ### [PHPUnit Watcher](https://github.com/spatie/phpunit-watcher)
+  - [Codeception](https://codeception.com/)
 
-- ### [Mockery](http://docs.mockery.io/en/latest/)
+  - [PHPUnit](https://phpunit.de/)
 
-- ### [PHP Code Sniffer](https://github.com/squizlabs/PHP_CodeSniffer/wiki)
+  - [PHPUnit Watcher](https://github.com/spatie/phpunit-watcher)
 
-- ### [Php CS Fixer](https://github.com/FriendsOfPHP/PHP-CS-Fixer)
+  - [Mockery](http://docs.mockery.io/en/latest/)
 
-- ### [Psalm](https://psalm.dev/)
+  - [Faker](https://fakerphp.github.io/)
 
-- ### [Php Bench](https://github.com/phpbench/phpbench)
+- ### Coding Standards
 
-- ### [Faker](https://fakerphp.github.io/)
+  - [PHP Code Sniffer](https://github.com/squizlabs/PHP_CodeSniffer/wiki)
 
-- ### [Symfony VarDumper & VarDumper Server](https://symfony.com/doc/current/components/var_dumper.html)
+  - [Php CS Fixer](https://github.com/FriendsOfPHP/PHP-CS-Fixer)
 
-- ### [Psysh](https://psysh.org/)
+- ### Static Analysis
 
-- ### [Whoops](https://filp.github.io/whoops/)
+  - [PHPStan](https://phpstan.org/)
 
-- ### [Collision](https://github.com/nunomaduro/collision)
+  - [Psalm](https://psalm.dev/)
+
+- ### Benchmarking
+
+  - [Php Bench](https://github.com/phpbench/phpbench)
+
+- ### Error Handling and Debugging
+
+  - [Symfony VarDumper & VarDumper Server](https://symfony.com/doc/current/components/var_dumper.html)
+
+  - [Psysh](https://psysh.org/)
+
+  - [Whoops](https://filp.github.io/whoops/)
+
+  - [Collision](https://github.com/nunomaduro/collision)
 
 ## DevOps and Continuous Integration
 
