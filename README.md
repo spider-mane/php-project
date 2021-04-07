@@ -47,8 +47,6 @@ Php Project gets you started with an array of third-party tools that you may fin
 
 - ### Testing
 
-  - [Codeception](https://codeception.com/)
-
   - [PHPUnit](https://phpunit.de/)
 
   - [PHPUnit Watcher](https://github.com/spatie/phpunit-watcher)
@@ -56,6 +54,8 @@ Php Project gets you started with an array of third-party tools that you may fin
   - [Mockery](http://docs.mockery.io/en/latest/)
 
   - [Faker](https://fakerphp.github.io/)
+
+  - [Codeception](https://codeception.com/)
 
 - ### Coding Standards
 
