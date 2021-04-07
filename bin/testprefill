@@ -56,16 +56,14 @@ if (file_exists($testDir)) {
 shell_exec("$mkdir $testDir && cp -r $copy $testDir");
 // shell_exec("$mkdir $testDir && git clone $root/.git $testDir");
 
-__test_prefill($prefill, $answers);
+// limit exposure with immediately invoked closure
+(function () use ($prefill, $answers) {
+  $__prefill__ = $prefill;
+  unset($prefill);
 
-function __test_prefill(string $test, array $defaults)
-{
-  $gjpgafgapfesahfpfkafgjalkasfkafdkafak = $test;
-  unset($test);
+  $__answers__ = $answers;
+  unset($answers);
 
-  $jhapadapfhdspahfdpfdaphdspadfpahdpnaf = $defaults;
-  unset($defaults);
-
-  extract($jhapadapfhdspahfdpfdaphdspadfpahdpnaf);
-  require $gjpgafgapfesahfpfkafgjalkasfkafdkafak;
-}
+  extract($__answers__);
+  require $__prefill__;
+})();
