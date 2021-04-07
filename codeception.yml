@@ -2,7 +2,7 @@ paths:
     tests: tests
     output: build/codeception
     data: tests/setup/data
-    support: tests/support
+    support: tests/support/Generated
     envs: tests/setup/env
 actor_suffix: Tester
 extensions:

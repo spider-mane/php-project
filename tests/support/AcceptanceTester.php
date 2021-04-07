@@ -18,7 +18,7 @@
  */
 class AcceptanceTester extends \Codeception\Actor
 {
-    use Tests\Support\Actions\Generated\AcceptanceTesterActions;
+    use Tests\Support\Generated\AcceptanceTesterActions;
 
     /**
      * Define custom actions here

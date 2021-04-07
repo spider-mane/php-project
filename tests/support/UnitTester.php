@@ -18,7 +18,7 @@
  */
 class UnitTester extends \Codeception\Actor
 {
-    use Tests\Support\Actions\Generated\UnitTesterActions;
+    use Tests\Support\Generated\UnitTesterActions;
 
     /**
      * Define custom actions here

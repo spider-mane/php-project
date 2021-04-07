@@ -18,7 +18,7 @@
  */
 class FunctionalTester extends \Codeception\Actor
 {
-    use Tests\Support\Actions\Generated\FunctionalTesterActions;
+    use Tests\Support\Generated\FunctionalTesterActions;
 
     /**
      * Define custom actions here
