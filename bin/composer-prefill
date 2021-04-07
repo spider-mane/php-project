@@ -14,7 +14,7 @@ if (isset($incompatible[PHP_OS])) {
   exit;
 }
 
-// limit exposure with immediately invoked closure
+// limit exposure with an immediately invoked closure
 (function () {
   require __DIR__ . '/prefill';
 })();
