@@ -7,8 +7,8 @@
 /.editorconfig           export-ignore
 /.gitattributes          export-ignore
 /.gitignore              export-ignore
-/build                   export-ignore
 /postcss.config.js       export-ignore
-/src                     export-ignore
-/tests                   export-ignore
+/scripts/                export-ignore
+/src/                    export-ignore
+/tests/                  export-ignore
 /webpack.config.js       export-ignore

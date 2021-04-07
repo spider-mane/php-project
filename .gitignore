@@ -1,5 +1,6 @@
 # Dev and CI
 .phpunit.result.cache
+/dist/
 /build/
 docker-compose.override.yml
 phpcs.xml

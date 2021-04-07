@@ -133,10 +133,10 @@ $mergeJsonData = [
 
 // files to rename
 $rename = [
-  'example.gitattributes' => function () {
+  '.example.gitattributes' => function () {
     return '.gitattributes';
   },
-  'assets/example.gitattributes' => function () {
+  'assets/.example.gitattributes' => function () {
     return '.gitattributes';
   },
 ];
