@@ -32,7 +32,7 @@ $answers = [
 
   'packageName' => 'tical',
   'packageWebsite' => 'https://github.com/method-man-420/tical',
-  'packageDescription' => "Straight from the brain, I'll be giving you the pain, anger Coming from the 36th Chamber, bang!",
+  'packageDescription' => "Straight from the brain, I'll be giving you the pain, anger! Coming from the 36th Chamber, bang!",
 
   'psr4Namespace' => "MethodMan\\Tical",
 ];
@@ -56,13 +56,12 @@ if (file_exists($testDir)) {
 shell_exec("$mkdir $testDir && cp -r $copy $testDir");
 // shell_exec("$mkdir $testDir && git clone $root/.git $testDir");
 
-// limit exposure with an immediately invoked closure
+// Limit exposure! With an immediately invoked closure.
 (function () use ($prefill, $answers) {
   $__prefill__ = $prefill;
-  unset($prefill);
-
   $__answers__ = $answers;
-  unset($answers);
+
+  unset($prefill, $answers);
 
   extract($__answers__);
   require $__prefill__;
