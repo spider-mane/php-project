@@ -1,10 +1,8 @@
 # Dev and CI
 *.cache
-/dist/
 /build/
+/dist/
 docker-compose.override.yml
-phpcs.xml
-phpunit.xml
 
 # Composer
 /vendor/
@@ -20,10 +18,10 @@ composer.lock
 !example.env
 
 # Editor/ IDE
+*.code-workspace
 .idea/
 .project/
 .vscode/
-*.code-workspace
 
 # System files
 .DS_Store
