@@ -12,18 +12,22 @@ $root = dirname(__DIR__, 1);
 $testDir = $root . '/build/test-prefill';
 $prefill = $testDir . '/bin/prefill';
 
-$exclude = [
-  'build',
-  'vendor',
-  'composer.lock',
-  'assets/build',
-  'assets/node_modules',
-  'assets/package-lock.json',
-  '.phpunit.result.cache',
-  '.idea',
-  '.vscode',
-  glob('*.code-workspace')[0],
-];
+$exclude = array_merge(
+  [
+    '.idea',
+    '.project',
+    '.vscode',
+    'assets/build',
+    'assets/dist',
+    'assets/node_modules',
+    'assets/package-lock.json',
+    'build',
+    'composer.lock',
+    'vendor',
+  ],
+  glob("*.code-workspace"),
+  glob("**/*.code-workspace"),
+);
 
 $answers = [
   'authorName' => 'Method Man',
@@ -38,23 +42,46 @@ $answers = [
 ];
 
 ################################################################################
+# Functions (as closures to avoid potential collisions with prefill script)
+################################################################################
+$copyContents = function (string $dir, string $copyDir, array $exclude = [], ?string $sub = null) use (&$copyContents): void {
+  $currentDir = $sub ?? $dir;
+
+  $files = array_filter(scandir($currentDir), function ($file) {
+    return !in_array($file, ['.', '..']);
+  });
+
+  foreach ($files as $file) {
+    $file = "$currentDir/$file";
+    $copy = $copyDir . '/' . str_replace("$dir", '', $file);
+
+    if (in_array($file, $exclude)) {
+      continue;
+    }
+
+    if (is_dir($file)) {
+      mkdir($copy);
+      $copyContents($dir, $copyDir, $exclude, $file);
+
+      continue;
+    }
+
+    copy($file, $copy);
+  }
+};
+
+################################################################################
 # Run
 ################################################################################
-// Windows gets fussy when using mkdir with forward slashes
-$testDir = str_replace('/', DIRECTORY_SEPARATOR, $testDir);
-
-$files = array_filter(scandir($root), function ($file) use ($exclude) {
-  $nav = ['.', '..'];
-  return !in_array($file, array_merge($nav, $exclude));
-});
-$copy = implode(' ', $files);
-$mkdir = PHP_OS === 'WINNT' ? 'mkdir' : 'mkdir -p';
+$exclude = array_map(function ($file) use ($root) {
+  return "$root/$file";
+}, $exclude);
 
 if (file_exists($testDir)) {
   shell_exec("chmod -R 777 $testDir && rm -rf -f $testDir");
 }
-shell_exec("$mkdir $testDir && cp -r $copy $testDir");
-// shell_exec("$mkdir $testDir && git clone $root/.git $testDir");
+mkdir($testDir);
+$copyContents($root, $testDir, $exclude);
 
 // Limit exposure! With an immediately invoked closure.
 (function () use ($prefill, $answers) {

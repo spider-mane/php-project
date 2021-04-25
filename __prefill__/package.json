@@ -1,9 +1,0 @@
-{
-  "name": ":package_name",
-  "description": ":package_description",
-  "author": {
-    "name": ":package_author",
-    "email": ":author_email",
-    "url": ":author_website"
-  }
-}

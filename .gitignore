@@ -2,6 +2,7 @@
 *.cache
 /build/
 /dist/
+/logs/
 docker-compose.override.yml
 
 # Composer
