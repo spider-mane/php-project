@@ -5,7 +5,7 @@ namespace PseudoVendor\PseudoPackage;
 class BeginnerClass
 {
     /**
-     * Create a new Skeleton Instance.
+     * Create a new BeginnerClass.
      */
     public function __construct()
     {
@@ -18,7 +18,7 @@ class BeginnerClass
      * @param string $phrase Phrase to return
      * @return string Returns the phrase passed in
      */
-    public function returnPhrase($phrase)
+    public function returnPhrase(string $phrase): string
     {
         return $phrase;
     }
