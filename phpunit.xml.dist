@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/8.5/phpunit.xsd"
+  xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
   backupGlobals="false"
   backupStaticAttributes="false"
   beStrictAboutCoversAnnotation="true"
@@ -8,9 +8,6 @@
   beStrictAboutTodoAnnotatedTests="true"
   bootstrap="vendor/autoload.php"
   colors="true"
-  convertErrorsToExceptions="true"
-  convertNoticesToExceptions="true"
-  convertWarningsToExceptions="true"
   defaultTestSuite="unit"
   executionOrder="depends,defects"
   forceCoversAnnotation="false"
@@ -29,6 +26,11 @@
     <!-- Integration Testing -->
     <testsuite name="integration">
       <directory>tests/suites/integration</directory>
+    </testsuite>
+
+    <!-- Functional Testing -->
+    <testsuite name="functional">
+      <directory>tests/suites/functional</directory>
     </testsuite>
 
     <!-- Acceptance Testing -->
