@@ -1,8 +1,0 @@
----
-name": :package_name
-version": :package_version
-description": :package_description
-textdomain": :package_textdomain
-website: :package_website
-author: :package_author
-author_email: :author_email
