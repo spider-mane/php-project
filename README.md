@@ -31,11 +31,17 @@ Some commonly defined directories have been included and are merely suggestive. 
 
 ```text
 assets/
+bench/
 bin/
 build/
 config/
 docs/
+logs/
+public/
+spec/
 src/
+story/
+templates/
 tests/
 vendor/
 views/
@@ -43,45 +49,52 @@ views/
 
 ## Development Tools
 
-Php Project gets you started with an array of third-party tools that you may find useful during development. Simply delete any you don't need from the `require-dev` section of your `composer.json` and they'll be uninstalled the next time you run the `composer update` command. Information and documentation for each can be found at their websites linked below.
+Php Project gets you started with an assortment of third-party tools that are useful for development and testing. Some of these will be redundant and you'll want to choose some over others. Simply delete any you don't need from the `require-dev` section of your `composer.json` and they'll be uninstalled the next time you run the `composer update` command. Information and documentation for each can be found at their websites linked below.
 
 - ### Testing
 
-  - [Codeception](https://codeception.com/)
-
-  - [PHPUnit](https://phpunit.de/)
-
+  - [PHPUnit](https://phpunit.de)
+  - [PhpSpec](http://phpspec.net)
+  - [Behat](https://behat.org)
+  - [Mockery](http://docs.mockery.io)
+  - [Faker](https://fakerphp.github.io)
   - [PHPUnit Watcher](https://github.com/spatie/phpunit-watcher)
 
-  - [Mockery](http://docs.mockery.io/en/latest/)
+- ### Debugging
 
-  - [Faker](https://fakerphp.github.io/)
+  - [Whoops](https://filp.github.io/whoops)
+  - [Psysh](https://psysh.org)
+  - [Symfony VarDumper](https://symfony.com/components/VarDumper)
+  - [Symfony ErrorHandler](https://symfony.com/components/ErrorHandler)
+  - [PHP Debug Bar](http://phpdebugbar.com)
+  - [Collision](https://github.com/nunomaduro/collision)
 
 - ### Coding Standards
 
   - [PHP Code Sniffer](https://github.com/squizlabs/PHP_CodeSniffer/wiki)
-
-  - [Php CS Fixer](https://github.com/FriendsOfPHP/PHP-CS-Fixer)
+  - [PHP CS Fixer](https://github.com/FriendsOfPHP/PHP-CS-Fixer)
+  - [PHPCompatibility](https://github.com/PHPCompatibility/PHPCompatibility)
 
 - ### Static Analysis
 
-  - [PHPStan](https://phpstan.org/)
+  - [PHPStan](https://phpstan.org)
+  - [Psalm](https://psalm.dev)
+  - [PHPMD](https://phpmd.org/)
+  - [PHP Depend](https://pdepend.org/)
 
-  - [Psalm](https://psalm.dev/)
+- ### Linting
+
+  - [PHP Parallel Lint](https://github.com/php-parallel-lint/PHP-Parallel-Lint)
+  - [PHPLint](https://github.com/overtrue/phplint)
 
 - ### Benchmarking
 
-  - [Php Bench](https://github.com/phpbench/phpbench)
+  - [PHPBench](https://phpbench.readthedocs.io)
 
-- ### Debugging
+- ### Build
 
-  - [Symfony VarDumper & VarDumper Server](https://symfony.com/doc/current/components/var_dumper.html)
-
-  - [Psysh](https://psysh.org/)
-
-  - [Whoops](https://filp.github.io/whoops/)
-
-  - [Collision](https://github.com/nunomaduro/collision)
+  - [Composer Git Hooks](https://github.com/BrainMaestro/composer-git-hooks)
+  - [Captain Hook](https://github.com/captainhookphp/captainhook)
 
 ## DevOps and Continuous Integration
 
@@ -92,6 +105,10 @@ Much of the included boilerplate is for CI and test automation services. All tha
 - ### [Travis CI](https://www.travis-ci.com/)
 
 - ### [CircleCI](https://circleci.com/)
+
+## Composer Scripts
+
+Php Project provides extra composer commands via composer scripts. These of course are simply mapped to the cli of some of the various development utilities included.
 
 ## Forking
 
