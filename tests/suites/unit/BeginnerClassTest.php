@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\Suites\Unit;
 
-use PHPUnit\Framework\TestCase;
 use PseudoVendor\PseudoPackage\BeginnerClass;
+use Tests\Support\TestCase;
 
 class BeginnerClassTest extends TestCase
 {

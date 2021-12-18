@@ -44,6 +44,7 @@
     "phpspec/phpspec": "^7.1",
     "phpstan/phpstan": "^0.12.83",
     "phpunit/phpunit": "^9.5",
+    "phpunit/phpunit-selenium": "^9.0",
     "psy/psysh": "^0.10.7",
     "spatie/phpunit-watcher": "^1.12",
     "squizlabs/php_codesniffer": "^3.5",
@@ -58,9 +59,7 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "Tests\\Unit\\": "tests/suites/unit/",
-      "Tests\\Acceptance\\": "tests/suites/acceptance/",
-      "Tests\\Fixtures\\": "tests/fixtures"
+      "Tests\\": "tests/"
     }
   },
   "scripts": {

@@ -59,14 +59,15 @@ Php Project gets you started with an assortment of third-party tools that are us
   - [Mockery](http://docs.mockery.io)
   - [Faker](https://fakerphp.github.io)
   - [PHPUnit Watcher](https://github.com/spatie/phpunit-watcher)
+  - [PHPUnit Selenium](https://github.com/giorgiosironi/phpunit-selenium)
 
 - ### Debugging
 
   - [Whoops](https://filp.github.io/whoops)
   - [Psysh](https://psysh.org)
-  - [Symfony VarDumper](https://symfony.com/components/VarDumper)
-  - [Symfony ErrorHandler](https://symfony.com/components/ErrorHandler)
+  - [Symfony VarDumper](https://symfony.com/doc/current/components/var_dumper)
   - [PHP Debug Bar](http://phpdebugbar.com)
+  - [Symfony ErrorHandler](https://github.com/symfony/error-handler)
   - [Collision](https://github.com/nunomaduro/collision)
 
 - ### Coding Standards
