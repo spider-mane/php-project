@@ -44,7 +44,12 @@ $answers = [
 ################################################################################
 # Functions (as closures to avoid potential collisions with prefill script)
 ################################################################################
-$copyContents = function (string $dir, string $copyDir, array $exclude = [], ?string $sub = null) use (&$copyContents): void {
+$copyContents = function (
+  string $dir,
+  string $copyDir,
+  array $exclude = [],
+  ?string $sub = null
+) use (&$copyContents): void {
   $currentDir = $sub ?? $dir;
 
   $files = array_filter(scandir($currentDir), function ($file) {
@@ -83,13 +88,10 @@ if (file_exists($testDir)) {
 mkdir($testDir);
 $copyContents($root, $testDir, $exclude);
 
+chdir($testDir);
+
 // Limit exposure! With an immediately invoked closure.
-(function () use ($prefill, $answers) {
-  $__prefill__ = $prefill;
-  $__answers__ = $answers;
-
-  unset($prefill, $answers);
-
+(function ($__prefill__, $__answers__) {
   extract($__answers__);
   require $__prefill__;
-})();
+})($prefill, $answers);
