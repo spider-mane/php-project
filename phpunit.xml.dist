@@ -20,22 +20,22 @@
   <testsuites>
     <!-- Unit Testing -->
     <testsuite name="unit">
-      <directory>tests/suites/unit</directory>
+      <directory>tests/Suites/Unit</directory>
     </testsuite>
 
     <!-- Integration Testing -->
     <testsuite name="integration">
-      <directory>tests/suites/integration</directory>
+      <directory>tests/Suites/Integration</directory>
     </testsuite>
 
     <!-- Functional Testing -->
     <testsuite name="functional">
-      <directory>tests/suites/functional</directory>
+      <directory>tests/Suites/Functional</directory>
     </testsuite>
 
     <!-- Acceptance Testing -->
     <testsuite name="acceptance">
-      <directory>tests/suites/acceptance</directory>
+      <directory>tests/Suites/Acceptance</directory>
     </testsuite>
   </testsuites>
 
