@@ -7,6 +7,8 @@
   beStrictAboutOutputDuringTests="false"
   beStrictAboutTodoAnnotatedTests="true"
   bootstrap="vendor/autoload.php"
+  cacheResult="true"
+  cacheResultFile="build/phpunit/.result.cache"
   colors="true"
   defaultTestSuite="unit"
   executionOrder="depends,defects"
@@ -14,6 +16,7 @@
   printerClass="NunoMaduro\Collision\Adapters\Phpunit\Printer"
   processIsolation="false"
   stopOnFailure="true"
+  testdox="true"
   verbose="true">
 
   <!-- Testsuites -->
