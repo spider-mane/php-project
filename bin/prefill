@@ -246,7 +246,7 @@ shell_exec("rm -rf -f $root/.git && git init $root");
 // refresh composer autoload
 shell_exec("composer dump-autoload -d $root");
 
-echo "All Done! Happy coding!.\n";
+echo "All Done! Happy coding!\n";
 
 ################################################################################
 # Functions
