@@ -98,6 +98,7 @@ $files = array_merge(
   glob($root . '/src/*.php'),
   glob($root . '/tests/*.php'),
   glob($root . '/tests/**/*.php'),
+  glob($root . '/tests/**/**/*.php'),
 
   // js boilerplate
 
