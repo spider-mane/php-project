@@ -20,7 +20,7 @@ composer create-project webtheory/php-project project-name
 On Unix/Linux systems, you should automatically be prompted for your project information after installation. If not, or if installing on Windows, manually run the `prefill` interactive script in the console from your project root directory by entering:
 
 ```bash
-php bin/prefill
+php prefill
 ```
 
 You'll then be asked a few questions that will allow Php Project to personalize the boilerplate with your info, initiate a new git repository, and update composer's autoload with your project's unique namespace.
