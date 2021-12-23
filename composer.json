@@ -79,6 +79,7 @@
     "shell": "vendor/bin/psysh",
     "collect": "vendor/bin/var-dump-server",
     "hooks": "vendor/bin/captainhook",
+    "env": "cp -n .env.example .env",
     "build": [
       "@fix",
       "@check",
@@ -86,6 +87,9 @@
       "@test",
       "@spec",
       "@review"
+    ],
+    "post-root-package-install": [
+      "@env"
     ],
     "post-create-project-cmd": [
       "bin/composer-prefill"
