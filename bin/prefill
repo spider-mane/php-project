@@ -253,7 +253,7 @@ shell_exec("rm -rf -f $root/.git && git init $root");
 // refresh composer autoload
 shell_exec("composer dump-autoload -d $root");
 
-echo "All Done! Happy coding!\n";
+echo "Done! \e[1;37;44m#StandWith\e\e[0;30;43mUkraine\e[0m\n";
 
 ################################################################################
 # Functions
