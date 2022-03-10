@@ -1,20 +1,36 @@
 const mix = require('laravel-mix');
-require('@tinypixelco/laravel-mix-wp-blocks');
 
-mix.setPublicPath('dist').browserSync(':package_name.test').options({
-  processCssUrls: false,
-});
-
-mix.sass('src/scss/main.scss', 'css', {
-  sassOptions: {
-    file: 'styles.css',
-    outputStyle: 'expanded',
-  },
-});
-
+/**
+ * Basic settings
+ */
 mix
-  .js('src/js/index.js', 'js')
-  .autoload({jquery: ['$', 'window.jQuery']})
+  .setResourceRoot('src')
+  .setPublicPath('dist')
+  .sourceMaps(true, 'eval-source-map', 'source-map')
+  .version();
+
+/**
+ * Browsersync
+ */
+mix.browserSync({proxy: ':package_name.test'});
+
+/**
+ * Javascript
+ */
+mix
+  .js('src/js/index.js', 'dist/js/:package_name.js')
+  // .autoload({jquery: ['$', 'window.jQuery']})
   .extract();
 
-mix.sourceMaps().version();
+/**
+ * Sass
+ */
+mix
+  .sass('src/scss/main.scss', 'dist/css/:package_name.css', {
+    sassOptions: {
+      outputStyle: 'expanded',
+    },
+  })
+  .options({
+    processCssUrls: false,
+  });
