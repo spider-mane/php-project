@@ -48,12 +48,15 @@
     "phpcompatibility/php-compatibility": "^9.3",
     "phpmd/phpmd": "@stable",
     "phpspec/phpspec": "^7.1",
+    "phpspec/prophecy-phpunit": "^2.0",
     "phpstan/phpstan": "^1.3",
     "phpunit/phpunit": "^9.5",
     "phpunit/phpunit-selenium": "^9.0",
     "psy/psysh": "^0.11",
+    "rector/rector": "^0.12.20",
     "spatie/phpunit-watcher": "^1.12",
     "squizlabs/php_codesniffer": "^3.5",
+    "symfony/dependency-injection": "^5.4",
     "symfony/error-handler": "^5.4",
     "symfony/thanks": "^1.1",
     "symfony/var-dumper": "^5.4",
@@ -76,11 +79,11 @@
     "bench": "vendor/bin/phpbench",
     "check": "vendor/bin/phpcs",
     "collect": "vendor/bin/var-dump-server",
-    "env": "cp -n .env.example .env && bin/build-paths",
-    "fix": "vendor/bin/php-cs-fixer",
+    "correct": "vendor/bin/phpcbf",
     "hooks": "vendor/bin/captainhook",
     "inspect": "vendor/bin/psalm",
     "lint": "vendor/bin/parallel-lint",
+    "play": ".playground/console.php",
     "review": "vendor/bin/behat",
     "shell": "vendor/bin/psysh",
     "spec": "vendor/bin/phpspec",
@@ -91,19 +94,29 @@
     "test:unit": "@test --testsuite unit",
     "watch": "vendor/bin/phpunit-watcher",
     "build": [
-      "@fix",
+      "@style",
       "@check",
       "@inspect",
       "@test",
       "@spec",
       "@review"
     ],
-    "post-install-cmd": [
-      "@env"
+    "setup": [
+      "composer install",
+      "cp -n .env.example .env",
+      "php bin/build-paths",
+      "php bin/make-playground"
+    ],
+    "style": [
+      "vendor/bin/rector process",
+      "vendor/bin/php-cs-fixer fix --verbose",
+      "@correct"
     ],
     "post-create-project-cmd": [
       "bin/composer-prefill",
-      "@env"
+      "cp -n .env.example .env",
+      "php bin/build-paths",
+      "php bin/make-playground"
     ]
   },
   "config": {
