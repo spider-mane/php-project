@@ -39,18 +39,24 @@ return (new Config(':theme_slug'))
         'method_argument_space' => [
             'after_heredoc' => true,
         ],
+        'no_empty_phpdoc' => true,
+        'no_extra_blank_lines' => true,
+        'no_leading_import_slash' => true,
         'no_unused_imports' => true,
         'not_operator_with_space' => false,
         'not_operator_with_successor_space' => false,
         'object_operator_without_whitespace' => true,
         'ordered_imports' => [
-            'sort_algorithm' => 'alpha'
+            'sort_algorithm' => 'alpha',
+            'imports_order' => ['class', 'function', 'const']
         ],
+
         'phpdoc_scalar' => [
             'types' => ['boolean', 'callback', 'double', 'integer', 'real', 'str'],
         ],
         'phpdoc_single_line_var_spacing' => true,
         'phpdoc_var_without_name' => true,
+        'single_blank_line_at_eof' => true,
         'single_space_after_construct' => true,
         'ternary_to_null_coalescing' => true,
         'trailing_comma_in_multiline' => true,

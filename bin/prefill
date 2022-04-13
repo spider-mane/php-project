@@ -96,7 +96,7 @@ $files = array_merge(
   glob($prefill . '/composer.json'),
   glob($prefill . '/package.json'),
   [
-    $root . '/phpcs.xml.dist',
+    $root . '/.php-cs-fixer.dist.php',
   ],
 
   // php boilerplate
