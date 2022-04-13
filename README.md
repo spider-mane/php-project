@@ -1,5 +1,12 @@
 # Php Project
 
+## A message to Russian 🇷🇺 people
+
+If you currently live in Russia, please read [this message][link-to-russia].
+
+[![Stand With Ukraine][banner-support-ukraine]][link-support-ukraine]
+
+[![Russian Warship Go Fuck Yourself][ico-support-ukraine]][link-support-ukraine]
 [![Latest Version on Packagist][ico-version]][link-packagist]
 [![Software License][ico-license]](LICENSE.md)
 [![Build Status][ico-travis]][link-travis]
@@ -7,9 +14,11 @@
 [![Quality Score][ico-code-quality]][link-code-quality]
 [![Total Downloads][ico-downloads]][link-downloads]
 
+## Purpose
+
 Php Project, as the name implies is a simple starting point for php projects. It's a fork of `thephpleague/skeleton` with a few things grabbed from `spatie/package-skeleton-laravel`. It not only provides boilerplate for commonly needed package files, but can populate placeholders with your own project details.
 
-## Install
+## Installation
 
 You can get started by using [Composer's](https://getcomposer.org/) `create-project` command.
 
@@ -74,6 +83,7 @@ Php Project gets you started with an assortment of third-party tools that are us
 
   - [PHP Code Sniffer](https://github.com/squizlabs/PHP_CodeSniffer/wiki)
   - [PHP CS Fixer](https://github.com/FriendsOfPHP/PHP-CS-Fixer)
+  - [Rector](https://getrector.org)
   - [PHPCompatibility](https://github.com/PHPCompatibility/PHPCompatibility)
 
 - ### Static Analysis
@@ -123,9 +133,9 @@ Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed re
 
 Please see [CONTRIBUTING](CONTRIBUTING.md) and [CODE_OF_CONDUCT](CODE_OF_CONDUCT.md) for details.
 
-## Security
+## Seclinkty
 
-If you discover any security related issues, please email spider.mane.web@gmail.com instead of using the issue tracker.
+If you discover any seclinkty related issues, please email spider.mane.web@gmail.com instead of using the issue tracker.
 
 ## Credits
 
@@ -136,17 +146,25 @@ If you discover any security related issues, please email spider.mane.web@gmail.
 
 The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
 
-[ico-version]: https://img.shields.io/packagist/v/spider-mane/php-project.svg?style=flat-square
-[ico-license]: https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square
-[ico-travis]: https://img.shields.io/travis/spider-mane/php-project/master.svg?style=flat-square
-[ico-scrutinizer]: https://img.shields.io/scrutinizer/coverage/g/spider-mane/php-project.svg?style=flat-square
-[ico-code-quality]: https://img.shields.io/scrutinizer/g/spider-mane/php-project.svg?style=flat-square
-[ico-downloads]: https://img.shields.io/packagist/dt/spider-mane/php-project.svg?style=flat-square
+## Notes
 
-[link-packagist]: https://packagist.org/packages/spider-mane/php-project
+[ico-version]: https://img.shields.io/packagist/v/spider-mane/php-project.svg
+[ico-license]: https://img.shields.io/badge/license-MIT-brightgreen.svg
+[ico-travis]: https://img.shields.io/travis/spider-mane/php-project/master.svg
+[ico-scrutinizer]: https://img.shields.io/scrutinizer/coverage/g/spider-mane/php-project.svg
+[ico-code-quality]: https://img.shields.io/scrutinizer/g/spider-mane/php-project.svg
+[ico-downloads]: https://img.shields.io/packagist/dt/spider-mane/php-project.svg
+
+[link-packagist]: https://packagist.org/packages/webtheory/php-project
 [link-travis]: https://travis-ci.org/spider-mane/php-project
 [link-scrutinizer]: https://scrutinizer-ci.com/g/spider-mane/php-project/code-structure
 [link-code-quality]: https://scrutinizer-ci.com/g/spider-mane/php-project
 [link-downloads]: https://packagist.org/packages/spider-mane/php-project
 [link-author]: https://github.com/spider-mane
 [link-contributors]: ../../contributors
+
+<!-- Support Ukraine -->
+[banner-support-ukraine]: https://raw.githubusercontent.com/vshymanskyy/StandWithUkraine/main/banner2-direct.svg
+[ico-support-ukraine]: https://raw.githubusercontent.com/vshymanskyy/StandWithUkraine/main/badges/RussianWarship.svg
+[link-support-ukraine]: https://stand-with-ukraine.pp.ua
+[link-to-russia]: https://github.com/vshymanskyy/StandWithUkraine/blob/main/docs/ToRussianPeople.md
