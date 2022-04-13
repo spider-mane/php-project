@@ -5,15 +5,17 @@ declare(strict_types=1);
 namespace Tests\Suites\Unit;
 
 use PseudoVendor\PseudoPackage\BeginnerClass;
-use Tests\Support\TestCase;
+use Tests\Support\UnitTestCase;
 
-class BeginnerClassTest extends TestCase
+class BeginnerClassTest extends UnitTestCase
 {
-    protected BeginnerClass $beginnerClass;
+    protected BeginnerClass $sut;
 
     public function setUp(): void
     {
-        $this->beginnerClass = new BeginnerClass();
+        parent::setUp();
+
+        $this->sut = new BeginnerClass();
     }
 
     /**
@@ -21,8 +23,13 @@ class BeginnerClassTest extends TestCase
      */
     public function it_returns_provided_phrase()
     {
-        $phrase = 'Sup Bruh!';
+        # Arrange
+        $phrase = $this->fake->sentence;
 
-        $this->assertEquals($phrase, $this->beginnerClass->returnPhrase($phrase));
+        # Act
+        $result = $this->sut->returnPhrase($phrase);
+
+        # Assert
+        $this->assertSame($phrase, $result);
     }
 }
