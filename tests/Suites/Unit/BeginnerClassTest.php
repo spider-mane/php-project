@@ -9,6 +9,11 @@ use Tests\Support\UnitTestCase;
 
 class BeginnerClassTest extends UnitTestCase
 {
+    /**
+     * System Under Test
+     *
+     * @var BeginnerClass
+     */
     protected BeginnerClass $sut;
 
     public function setUp(): void
