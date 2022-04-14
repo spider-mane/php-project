@@ -6,13 +6,13 @@ If you currently live in Russia, please read [this message][link-to-russia].
 
 [![Stand With Ukraine][banner-support-ukraine]][link-support-ukraine]
 
-[![Russian Warship Go Fuck Yourself][ico-support-ukraine]][link-support-ukraine]
-[![Latest Version on Packagist][ico-version]][link-packagist]
-[![Software License][ico-license]](LICENSE.md)
-[![Build Status][ico-travis]][link-travis]
-[![Coverage Status][ico-scrutinizer]][link-scrutinizer]
-[![Quality Score][ico-code-quality]][link-code-quality]
-[![Total Downloads][ico-downloads]][link-downloads]
+[![Russian Warship Go Fuck Yourself][badge-support-ukraine]][link-support-ukraine]
+[![Latest Version on Packagist][badge-packagist-version]][link-packagist]
+[![Total Downloads][badge-packagist-downloads]][link-packagist-downloads]
+[![Software License][badge-license]](LICENSE.md)
+<!-- [![Build Status][badge-scrutinizer-build]][link-scrutinizer-build] -->
+<!-- [![Code Coverage][badge-scrutinizer-coverage]][link-scrutinizer-coverage] -->
+<!-- [![Quality Score][badge-scrutinizer-quality]][link-scrutinizer] -->
 
 ## Purpose
 
@@ -133,9 +133,9 @@ Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed re
 
 Please see [CONTRIBUTING](CONTRIBUTING.md) and [CODE_OF_CONDUCT](CODE_OF_CONDUCT.md) for details.
 
-## Seclinkty
+## Security
 
-If you discover any seclinkty related issues, please email spider.mane.web@gmail.com instead of using the issue tracker.
+If you discover any security related issues, please email spider.mane.web@gmail.com instead of using the issue tracker.
 
 ## Credits
 
@@ -146,25 +146,27 @@ If you discover any seclinkty related issues, please email spider.mane.web@gmail
 
 The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
 
-## Notes
-
-[ico-version]: https://img.shields.io/packagist/v/spider-mane/php-project.svg
-[ico-license]: https://img.shields.io/badge/license-MIT-brightgreen.svg
-[ico-travis]: https://img.shields.io/travis/spider-mane/php-project/master.svg
-[ico-scrutinizer]: https://img.shields.io/scrutinizer/coverage/g/spider-mane/php-project.svg
-[ico-code-quality]: https://img.shields.io/scrutinizer/g/spider-mane/php-project.svg
-[ico-downloads]: https://img.shields.io/packagist/dt/spider-mane/php-project.svg
-
-[link-packagist]: https://packagist.org/packages/webtheory/php-project
-[link-travis]: https://travis-ci.org/spider-mane/php-project
-[link-scrutinizer]: https://scrutinizer-ci.com/g/spider-mane/php-project/code-structure
-[link-code-quality]: https://scrutinizer-ci.com/g/spider-mane/php-project
-[link-downloads]: https://packagist.org/packages/spider-mane/php-project
+<!-- Links -->
 [link-author]: https://github.com/spider-mane
 [link-contributors]: ../../contributors
+[link-packagist-downloads]: https://packagist.org/packages/webtheory/php-project/stats
+[link-packagist]: https://packagist.org/packages/webtheory/php-project
+[link-php]: https://php.net
+[link-scrutinizer-build]: https://scrutinizer-ci.com/g/spider-mane/php-project/inspections
+[link-scrutinizer-coverage]: https://scrutinizer-ci.com/g/spider-mane/php-project/code-structure
+[link-scrutinizer]: https://scrutinizer-ci.com/g/spider-mane/php-project
+
+<!-- Badges -->
+[badge-license]: https://img.shields.io/badge/license-MIT-brightgreen.svg
+[badge-packagist-downloads]: https://img.shields.io/packagist/dt/webtheory/php-project.svg
+[badge-packagist-php]: https://img.shields.io/packagist/php-v/webtheory/php-project.svg?colorB=%238892BF
+[badge-packagist-version]: https://img.shields.io/packagist/v/webtheory/php-project.svg
+[badge-scrutinizer-build]: https://img.shields.io/scrutinizer/build/g/spider-mane/php-project.svg
+[badge-scrutinizer-coverage]: https://img.shields.io/scrutinizer/coverage/g/spider-mane/php-project.svg
+[badge-scrutinizer-quality]: https://img.shields.io/scrutinizer/g/spider-mane/php-project.svg
 
 <!-- Support Ukraine -->
 [banner-support-ukraine]: https://raw.githubusercontent.com/vshymanskyy/StandWithUkraine/main/banner2-direct.svg
-[ico-support-ukraine]: https://raw.githubusercontent.com/vshymanskyy/StandWithUkraine/main/badges/RussianWarship.svg
+[badge-support-ukraine]: https://raw.githubusercontent.com/vshymanskyy/StandWithUkraine/main/badges/RussianWarship.svg
 [link-support-ukraine]: https://stand-with-ukraine.pp.ua
 [link-to-russia]: https://github.com/vshymanskyy/StandWithUkraine/blob/main/docs/ToRussianPeople.md
