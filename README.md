@@ -2,21 +2,19 @@
 
 ## A message to Russian 🇷🇺 people
 
-If you currently live in Russia, please read [this message][link-to-russia].
+If you currently live in Russia, please read [this message][link:to-russia].
 
-[![Stand With Ukraine][banner-support-ukraine]][link-support-ukraine]
+[![Stand With Ukraine][banner:support-ukraine]][link:support-ukraine]
 
-[![Russian Warship Go Fuck Yourself][badge-support-ukraine]][link-support-ukraine]
-[![Latest Version on Packagist][badge-packagist-version]][link-packagist]
-[![Total Downloads][badge-packagist-downloads]][link-packagist-downloads]
-[![Software License][badge-license]](LICENSE.md)
-<!-- [![Build Status][badge-scrutinizer-build]][link-scrutinizer-build] -->
-<!-- [![Code Coverage][badge-scrutinizer-coverage]][link-scrutinizer-coverage] -->
-<!-- [![Quality Score][badge-scrutinizer-quality]][link-scrutinizer] -->
+[![Russian Warship Go Fuck Yourself][badge:support-ukraine]][link:support-ukraine]
+[![Software License][badge:license]][link:license]
+[![Latest Version on Packagist][badge:packagist-version]][link:packagist]
+[![Total Downloads][badge:packagist-downloads]][link:packagist-downloads]
+[![Software License][badge:license]][link:license]
 
 ## Purpose
 
-Php Project, as the name implies is a simple starting point for php projects. It's a fork of `thephpleague/skeleton` with a few things grabbed from `spatie/package-skeleton-laravel`. It not only provides boilerplate for commonly needed package files, but can populate placeholders with your own project details.
+Php Project is a simple starting point for your next PHP project! Forked from `thephpleague/skeleton`, it not only provides boilerplate for commonly needed package files, but can populate placeholders with your own project details.
 
 ## Installation
 
@@ -127,11 +125,11 @@ If you find that you often make projects with a specific or more defined structu
 
 ## Change log
 
-Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
+Please see [CHANGELOG][link:changelog] for more information on what has changed recently.
 
 ## Contributing
 
-Please see [CONTRIBUTING](CONTRIBUTING.md) and [CODE_OF_CONDUCT](CODE_OF_CONDUCT.md) for details.
+Please see [CONTRIBUTING][link:contributing] and [CODE_OF_CONDUCT][link:code-of-conduct] for details.
 
 ## Security
 
@@ -139,34 +137,33 @@ If you discover any security related issues, please email spider.mane.web@gmail.
 
 ## Credits
 
-- [Chris Williams][link-author]
-- [All Contributors][link-contributors]
+- [Chris Williams][link:author]
+- [All Contributors][link:contributors]
 
 ## License
 
-The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
+The MIT License (MIT). Please see [License File][link:license] for more information.
 
 <!-- Links -->
-[link-author]: https://github.com/spider-mane
-[link-contributors]: ../../contributors
-[link-packagist-downloads]: https://packagist.org/packages/webtheory/php-project/stats
-[link-packagist]: https://packagist.org/packages/webtheory/php-project
-[link-php]: https://php.net
-[link-scrutinizer-build]: https://scrutinizer-ci.com/g/spider-mane/php-project/inspections
-[link-scrutinizer-coverage]: https://scrutinizer-ci.com/g/spider-mane/php-project/code-structure
-[link-scrutinizer]: https://scrutinizer-ci.com/g/spider-mane/php-project
+
+[link:author]: https://github.com/spider-mane
+[link:changelog]: CHANGELOG.md
+[link:code-of-conduct]: CODE_OF_CONDUCT.md
+[link:contributing]: CONTRIBUTING.md
+[link:contributors]: ../../contributors
+[link:license]: LICENSE.md
+[link:packagist-downloads]: https://packagist.org/packages/webtheory/php-project/stats
+[link:packagist]: https://packagist.org/packages/webtheory/php-project
 
 <!-- Badges -->
-[badge-license]: https://img.shields.io/badge/license-MIT-brightgreen.svg
-[badge-packagist-downloads]: https://img.shields.io/packagist/dt/webtheory/php-project.svg
-[badge-packagist-php]: https://img.shields.io/packagist/php-v/webtheory/php-project.svg?colorB=%238892BF
-[badge-packagist-version]: https://img.shields.io/packagist/v/webtheory/php-project.svg
-[badge-scrutinizer-build]: https://img.shields.io/scrutinizer/build/g/spider-mane/php-project.svg
-[badge-scrutinizer-coverage]: https://img.shields.io/scrutinizer/coverage/g/spider-mane/php-project.svg
-[badge-scrutinizer-quality]: https://img.shields.io/scrutinizer/g/spider-mane/php-project.svg
+
+[badge:license]: https://img.shields.io/badge/license-MIT-brightgreen.svg
+[badge:packagist-downloads]: https://img.shields.io/packagist/dt/webtheory/php-project.svg
+[badge:packagist-version]: https://img.shields.io/packagist/v/webtheory/php-project.svg
 
 <!-- Support Ukraine -->
-[banner-support-ukraine]: https://raw.githubusercontent.com/vshymanskyy/StandWithUkraine/main/banner2-direct.svg
-[badge-support-ukraine]: https://raw.githubusercontent.com/vshymanskyy/StandWithUkraine/main/badges/RussianWarship.svg
-[link-support-ukraine]: https://stand-with-ukraine.pp.ua
-[link-to-russia]: https://github.com/vshymanskyy/StandWithUkraine/blob/main/docs/ToRussianPeople.md
+
+[badge:support-ukraine]: https://raw.githubusercontent.com/vshymanskyy/StandWithUkraine/main/badges/RussianWarship.svg
+[banner:support-ukraine]: https://raw.githubusercontent.com/vshymanskyy/StandWithUkraine/main/banner2-direct.svg
+[link:support-ukraine]: https://stand-with-ukraine.pp.ua
+[link:to-russia]: https://github.com/vshymanskyy/StandWithUkraine/blob/main/docs/ToRussianPeople.md

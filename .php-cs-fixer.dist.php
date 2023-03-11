@@ -6,17 +6,17 @@ use PhpCsFixer\Finder;
 $finder = Finder::create()
     ->in(['src', 'tests'])
     ->exclude(['bin', 'vendor', 'assets'])
+    ->append(['rector.php'])
     ->name('*.php')
     ->ignoreDotFiles(true)
     ->ignoreVCS(true);
 
-return (new Config(':theme_slug'))
+return (new Config())
     ->setCacheFile(__DIR__ . '/build/php-cs-fixer/.cache')
     ->setFinder($finder)
     ->setRules([
         '@PSR12' => true,
         'array_syntax' => ['syntax' => 'short'],
-        'binary_operator_spaces' => true,
         'blank_line_before_statement' => [
             'statements' => ['break', 'continue', 'declare', 'return', 'throw', 'try'],
         ],
@@ -32,6 +32,7 @@ return (new Config(':theme_slug'))
             'spacing' => 'one',
         ],
         'fully_qualified_strict_types' => true,
+        'function_typehint_space' => true,
         'global_namespace_import' => [
             'import_classes' => true
         ],
@@ -50,7 +51,6 @@ return (new Config(':theme_slug'))
             'sort_algorithm' => 'alpha',
             'imports_order' => ['class', 'function', 'const']
         ],
-
         'phpdoc_scalar' => [
             'types' => ['boolean', 'callback', 'double', 'integer', 'real', 'str'],
         ],
