@@ -97,6 +97,7 @@ $files = array_merge(
   glob($prefill . '/package.json'),
   [
     $root . '/.php-cs-fixer.dist.php',
+    $root . '/.devcontainer/devcontainer.json',
   ],
 
   // php boilerplate
