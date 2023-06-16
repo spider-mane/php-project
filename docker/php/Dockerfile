@@ -35,16 +35,18 @@ COPY --from=spidermane/trunk * /trunk
 ARG UNMINIMIZE=false
 RUN /trunk/actions/unminimize "$UNMINIMIZE"
 
+ARG LOCAL_REPOSITORY=/studio
+RUN /trunk/provisions/studio --path "$LOCAL_REPOSITORY"
+
 ARG GIT_USER
 ARG GIT_EMAIL
 ARG GIT_DEFAULT_BRANCH=master
 ARG GIT_INSTALL_GCM=false
 RUN /trunk/provisions/git --user "$GIT_USER" --email "$GIT_EMAIL" --default-branch "$GIT_DEFAULT_BRANCH" --install-gcm "$GIT_INSTALL_GCM"
 
-RUN /trunk/provisions/zsh
-RUN /trunk/provisions/bat
+RUN /trunk/bundles/shell
 RUN /trunk/provisions/github
-RUN /trunk/provisions/studio
+
 RUN npm install -g npm-check-updates
 
 RUN /trunk/actions/cleanup

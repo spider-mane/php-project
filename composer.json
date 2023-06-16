@@ -61,6 +61,7 @@
     "vimeo/psalm": "^5.12",
     "vlucas/phpdotenv": "^5.5",
     "webtheory/path-builder": "@dev",
+    "webtheory/playground": "@dev",
     "webtheory/exterminate": "@dev"
   },
   "autoload": {
@@ -82,7 +83,7 @@
     "hooks": "vendor/bin/captainhook",
     "inspect": "vendor/bin/psalm",
     "lint": "vendor/bin/parallel-lint",
-    "play": ".playground/console.php",
+    "play": "php @playground/console.php",
     "rector": "vendor/bin/rector process",
     "review": "vendor/bin/behat",
     "shell": "vendor/bin/psysh",
@@ -104,7 +105,8 @@
     "setup": [
       "composer install",
       "cp -n .env.example .env",
-      "vendor/bin/build-paths"
+      "vendor/bin/build-paths",
+      "vendor/bin/make-playground"
     ],
     "style": [
       "vendor/bin/php-cs-fixer fix --verbose",
@@ -114,7 +116,8 @@
     "post-create-project-cmd": [
       "bin/composer-prefill",
       "cp -n .env.example .env",
-      "vendor/bin/build-paths"
+      "vendor/bin/build-paths",
+      "vendor/bin/make-playground"
     ]
   },
   "config": {
@@ -139,6 +142,10 @@
       "cache": {},
       "logs": {},
       "temp": {}
+    },
+    "playground": {
+      "contexts": [],
+      "bootstrap": "tests/bootstrap.php"
     }
   }
 }

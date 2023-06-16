@@ -8,12 +8,12 @@ services:
         UNMINIMIZE: true
         GIT_USER:
         GIT_EMAIL:
-        GIT_DEFAULT_BRANCH: master
+        GIT_DEFAULT_BRANCH: "master"
         GIT_INSTALL_GCM: false
     environment:
       TERM: "${TERM}"
       HOST_USER: "${USER}"
-      ZSH_THEME: powerlevel10k/powerlevel10k
+      ZSH_THEME: "powerlevel10k/powerlevel10k"
     volumes:
       # Source
       - ".:/app"
