@@ -60,6 +60,7 @@
     "symfony/var-dumper": "^5.0 || ^6.0.19",
     "vimeo/psalm": "^5.12",
     "vlucas/phpdotenv": "^5.5",
+    "webtheory/path-builder": "@dev",
     "webtheory/exterminate": "@dev"
   },
   "autoload": {
@@ -103,8 +104,7 @@
     "setup": [
       "composer install",
       "cp -n .env.example .env",
-      "php bin/build-paths",
-      "php bin/make-playground"
+      "vendor/bin/build-paths"
     ],
     "style": [
       "vendor/bin/php-cs-fixer fix --verbose",
@@ -114,8 +114,7 @@
     "post-create-project-cmd": [
       "bin/composer-prefill",
       "cp -n .env.example .env",
-      "php bin/build-paths",
-      "php bin/make-playground"
+      "vendor/bin/build-paths"
     ]
   },
   "config": {

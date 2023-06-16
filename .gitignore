@@ -2,6 +2,7 @@
 *.cache
 /@playground
 /build/
+/cache/
 /dist/
 /logs/
 /temp/
