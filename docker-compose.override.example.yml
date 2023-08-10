@@ -3,16 +3,17 @@ services:
     build:
       target: app-interactive
       args:
-        LANG: "${LANG}"
-        TZ:
+        LANG: "${LANG:-en_US.UTF-8}"
+        TZ: 'America/New_York'
         UNMINIMIZE: true
         GIT_USER:
         GIT_EMAIL:
         GIT_DEFAULT_BRANCH: "master"
         GIT_INSTALL_GCM: false
     environment:
+      HOST_UID: 1000
+      HOST_GID: 1000
       TERM: "${TERM}"
-      HOST_USER: "${USER}"
       ZSH_THEME: "powerlevel10k/powerlevel10k"
     volumes:
       # Source
@@ -20,20 +21,15 @@ services:
       # Dependencies
       - "app.composer:/app/vendor"
       - "app.npm:/app/assets/node_modules"
-      # Build files
-      - "app.logs:/app/logs"
-      - "app.build:/app/build"
-      # Vscode server
-      - "vscode:/root/.vscode-server"
+      # Auth
+      - "~/.config/composer/auth.json:/home/php-project/.config/composer/auth.json"
+      # VS Code server
+      - "vscode:/home/php-project/.vscode-server"
 
 volumes:
   app.composer:
     driver: local
   app.npm:
-    driver: local
-  app.logs:
-    driver: local
-  app.build:
     driver: local
   vscode:
     driver: local

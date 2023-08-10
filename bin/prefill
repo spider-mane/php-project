@@ -1,15 +1,31 @@
 #!/usr/bin/env php
 <?php
 
-define('ROOT_DIRECTORY', dirname(__DIR__, 1));
-define('PREFILL_DIRECTORY', ROOT_DIRECTORY . '/__prefill__');
+use WebTheory\Prefill\Action\AutoloadDumper;
+use WebTheory\Prefill\Action\ActionCallback;
+use WebTheory\Prefill\Action\DirectoryKeeper;
+use WebTheory\Prefill\Action\FileCopier;
+use WebTheory\Prefill\Action\FilenameChanger;
+use WebTheory\Prefill\Builder;
+use WebTheory\Prefill\Action\FileRemover;
+use WebTheory\Prefill\Action\FileTransformer;
+use WebTheory\Prefill\Action\GitInitiator;
+use WebTheory\Prefill\Action\Message;
+use WebTheory\Prefill\BaseResolver;
+use WebTheory\Prefill\CallableReplacements;
+use WebTheory\Prefill\Prompt;
+use WebTheory\Prefill\Transformation\TransformationCallback;
+use WebTheory\Prefill\Transformation\JsonMerger;
+use WebTheory\Prefill\Transformation\TextReplacer;
+
+require_once dirname(__DIR__) . '/tests/bootstrap.php';
 
 ################################################################################
-# Config
+# Data
 ################################################################################
 
-$root = ROOT_DIRECTORY;
-$prefill = PREFILL_DIRECTORY;
+$root = dirname(__DIR__, 1);
+$stubs = $root . '/__prefill__';
 
 // allow defaults to be passed to script for testing
 $authorName = $authorName ?? trim(shell_exec('git config user.name'));
@@ -37,265 +53,131 @@ $fields = [
   'psr4_namespace' => ['PSR-4 namespace', 'Vendor\\Package', $psr4Namespace],
 ];
 
-$replacements = [
+$consent = 'Modify files with these values and create new git repository?';
 
-  // code
-  ':vendor_name\\\\:package_name\\\\' => function ($values) {
-    return str_replace('\\', '\\\\', $values['psr4_namespace']) . '\\\\';
-  },
-  'PseudoVendor\\\\PseudoPackage\\\\' => function ($values) {
-    return str_replace('\\', '\\\\', $values['psr4_namespace']) . '\\\\';
-  },
-  'PseudoVendor\\PseudoPackage' => function ($values) {
-    return $values['psr4_namespace'];
-  },
-  'pseudo-package' => function ($values) {
-    return $values['package_name'];
-  },
-
-  // text
-  ':package_name' => function ($values) {
-    return $values['package_name'];
-  },
-  ':package_website' => function ($values) {
-    return $values['package_website'];
-  },
-  ':package_description' => function ($values) {
-    return $values['package_description'];
-  },
-  ':package_author' => function ($values) {
-    return $values['author_name'];
-  },
-  ':author_username' => function ($values) {
-    return $values['author_github_username'];
-  },
-  ':author_website' => function ($values) {
-    return $values['author_website'];
-  },
-  ':author_email' => function ($values) {
-    return $values['author_email'];
-  },
-  ':vendor_name' => function ($values) {
-    return $values['vendor_name'];
-  },
-  ':vendor_github' => function ($values) {
-    return $values['vendor_github'];
-  },
-  ':vendor_website' => function ($values) {
-    return $values['vendor_website'];
-  },
-  ':system_year' => function () {
-    return date('Y');
-  }
-];
-
-$files = array_merge(
-  // misc boilerplate
-  glob($prefill . '/*.md'),
-  glob($prefill . '/*.xml.dist'),
-  glob($prefill . '/composer.json'),
-  glob($prefill . '/package.json'),
-  [
-    $root . '/.php-cs-fixer.dist.php',
-    $root . '/.devcontainer/devcontainer.json',
-  ],
-
-  // php boilerplate
-  glob($root . '/src/*.php'),
-  glob($root . '/tests/*.php'),
-  glob($root . '/tests/**/*.php'),
-  glob($root . '/tests/**/**/*.php'),
-
-  // js boilerplate
-
-  // css boilerplate
+// files to transform
+$boilerplate = array_merge(
+  // general boilerplate
+  glob($stubs . '/*'),
+  array_map(fn ($file) => $root . $file, [
+    '/.devcontainer/devcontainer.json',
+    '/bin/apprun',
+    '/bin/enterapp',
+    '/docker-compose.override.example.yml',
+    '/docker/php/Dockerfile',
+  ]),
+  ...array_map(fn ($file) => glob($root . $file), [
+    '/src/*.php',
+  ]),
 );
 
-// files whose output target is not in the root directory
-$locate = [
-  'package.json' => '/assets'
+// files whose output target does not correspond to its own relative path
+$locations = [
+  'package.json' => 'assets'
 ];
 
 // files where user input needs to be further refined
-$filter = [];
+$filters = [];
+
+$replacements = [
+  # text
+  'PseudoVendor\\PseudoPackage' => 'psr4_namespace',
+  'pseudo-package' => 'package_name',
+  'php-project' => 'package_name',
+
+  # placeholders
+  ':package_name' => 'package_name',
+  ':package_website' => 'package_website',
+  ':package_description' => 'package_description',
+  ':package_author' => 'author_name',
+  ':author_username' => 'author_github_username',
+  ':author_website' => 'author_website',
+  ':author_email' => 'author_email',
+  ':vendor_name' => 'vendor_name',
+  ':vendor_github' => 'vendor_github',
+  ':vendor_website' => 'vendor_website',
+  ':psr4_namespace' => fn ($values) => str_replace('\\', '\\\\', $values['psr4_namespace']) . '\\\\',
+  ':system_year' => fn () => date('Y'),
+];
 
 // json files whose contents should be merged with a functional counterpart
-$mergeJsonData = [
-  'composer.json' => function (array $old, array $new): array {
-    $composer = array_replace_recursive($old, $new);
-    $composer['authors'] = $new['authors'];
-    $composer['keywords'] = $new['keywords'];
-    $composer['autoload']['psr-4'] = $new['autoload']['psr-4'];
+$json = [
+  'composer.json' => function (object $base, array $stub): array {
+    $composer = array_replace_recursive((array) $base,  $stub);
+
+    $composer['authors'] = $stub['authors'];
+    $composer['keywords'] = $stub['keywords'];
+    $composer['autoload']['psr-4'] = $stub['autoload']['psr-4'];
+
+    $scripts = (array) $composer['scripts'];
+
     unset(
-      $composer['scripts']['post-create-project-cmd'],
-      $composer['scripts']['fill'],
+      $scripts['post-create-project-cmd'],
+      $scripts['fill']
     );
+
+    $composer['scripts'] = $scripts;
+
     return $composer;
   },
-  'package.json' => function (array $old, array $new): array {
-    $package = array_replace_recursive($old, $new);
+  'assets/package.json' => function (object $base, array $stub): array {
+    $package = array_replace_recursive((array) $base, (array) $stub);
+
     return $package;
   }
 ];
 
 // files to rename
 $rename = [
-  '.example.gitattributes' => function () {
-    return '.gitattributes';
-  },
-  'assets/.example.gitattributes' => function () {
-    return '.gitattributes';
-  },
+  '.example.gitattributes' => fn () => '.gitattributes',
+  'assets/.example.gitattributes' => fn () => '.gitattributes',
 ];
 
+// files to copy to root directory
+$copy = [];
+
 // files to delete
-$delete = [
+$remove = [
+  '__prefill__',
   'bin/composer-prefill',
+  'bin/prefill',
   'bin/testprefill',
   'bin/testproject',
   'bin/.gitattributes',
   'prefill',
 ];
 
+$keep = [
+  'bin',
+];
+
+$message = "Done! \e[1;37;44m#StandWith\e\e[0;30;43mUkraine\e[0m\n";
+
+$library = 'lib';
+
 ################################################################################
 # Process
 ################################################################################
 
-define('COL_DESCRIPTION', 0);
-define('COL_HELP', 1);
-define('COL_DEFAULT', 2);
+$replacements = new CallableReplacements($replacements);
+$baseResolver = new BaseResolver($locations, $root, $stubs);
 
-$root = ROOT_DIRECTORY;
-$prefill = PREFILL_DIRECTORY;
-$consent = 'Modify files with these values and create new git repository?';
+$builder = new Builder(
+  new FileTransformer(
+    $boilerplate,
+    $filters,
+    $baseResolver,
+    new TextReplacer($replacements),
+    new JsonMerger($root, $json),
+  ),
+  new FilenameChanger(new CallableReplacements($rename)),
+  new GitInitiator(),
+  new AutoloadDumper(),
+  new FileRemover(...$remove),
+  new FileCopier(...$copy),
+  new DirectoryKeeper(...$keep),
+  new Message($message),
+  new FileRemover($library)
+);
 
-$modify = 'n';
-do {
-  if ($modify == 'q') {
-    exit;
-  }
-
-  $values = [];
-
-  echo "----------------------------------------------------------------------\n";
-  echo "Please provide the following information:\n";
-  echo "----------------------------------------------------------------------\n";
-  foreach ($fields as $key => $field) {
-    $default = isset($field[COL_DEFAULT]) ? interpolate($field[COL_DEFAULT], $values) : '';
-    $prompt = sprintf(
-      '%s%s%s: ',
-      $field[COL_DESCRIPTION],
-      $field[COL_HELP] ? ' (' . $field[COL_HELP] . ')' : '',
-      $field[COL_DEFAULT] !== '' ? ' [' . $default . ']' : ''
-    );
-    $values[$key] = read_from_console($prompt);
-    if (empty($values[$key])) {
-      $values[$key] = $default;
-    }
-  }
-  echo "\n";
-
-  echo "----------------------------------------------------------------------\n";
-  echo "Please check that everything is correct:\n";
-  echo "----------------------------------------------------------------------\n";
-  foreach ($fields as $key => $field) {
-    echo $field[COL_DESCRIPTION] . ": $values[$key]\n";
-  }
-  echo "\n";
-} while (($modify = strtolower(read_from_console($consent . ' [y/N/q] '))) != 'y');
-echo "\n";
-
-// delete files
-foreach ($delete as $file) {
-  shell_exec("rm -f $root/$file");
-}
-// update and relocate boilerplate
-foreach ($files as $file) {
-  $contents = file_get_contents($file);
-  $filtered = isset($filter[$file]) ? ($filter[$file])($values) : $values;
-  foreach ($replacements as $str => $update) {
-    $contents = str_replace($str, $update($filtered), $contents);
-  }
-
-  // resolve absolute path
-  $base = basename($file);
-  $path = $locate[$base] ?? str_replace([$prefill, $root, $base], '', $file);
-  $file = cleanpath("$root/$path/$base");
-
-  // merge json files
-  if (isset($mergeJsonData[$base])) {
-    $merged = ($mergeJsonData[$base])(
-      json_decode(file_get_contents($file), true),
-      json_decode($contents, true)
-    );
-    $contents = encode_format_json($merged);
-  }
-
-  file_put_contents($file, $contents);
-}
-// rename files
-foreach ($rename as $file => $renameFile) {
-  $file = realpath("$root/$file");
-  rename($file, dirname($file) . '/' . $renameFile($values));
-}
-
-// delete prefill files and add .gitkeep if bin is left empty
-shell_exec('rm ' . __FILE__ . " && rm -rf $prefill");
-$bin = array_filter(scandir("$root/bin"), function ($file) {
-  return !in_array($file, ['.', '..']);
-});
-if (empty($bin)) {
-  touch("$root/bin/.gitkeep");
-}
-
-// reset git repository
-shell_exec("rm -rf -f $root/.git && git init $root");
-
-// refresh composer autoload
-shell_exec("composer dump-autoload -d $root");
-
-echo "Done! \e[1;37;44m#StandWith\e\e[0;30;43mUkraine\e[0m\n";
-
-################################################################################
-# Functions
-################################################################################
-
-function read_from_console($prompt)
-{
-  if (function_exists('readline')) {
-    $line = trim(readline($prompt));
-    if (!empty($line)) {
-      readline_add_history($line);
-    }
-  } else {
-    echo $prompt;
-    $line = trim(fgets(STDIN));
-  }
-  return $line;
-}
-
-function interpolate($text, $values)
-{
-  if (!preg_match_all('/\{(\w+)\}/', $text, $m)) {
-    return $text;
-  }
-  foreach ($m[0] as $k => $str) {
-    $f = $m[1][$k];
-    $text = str_replace($str, $values[$f], $text);
-  }
-  return $text;
-}
-
-function encode_format_json(array $json): string
-{
-  $flags = JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES;
-  $json = json_encode($json, $flags);
-  $default = '    ';
-  $preferred = '  ';
-  return str_replace($default, $preferred, $json) . "\n";
-}
-
-function cleanpath(string $path): string
-{
-  return preg_replace('~/+~', '/', $path);
-}
+$builder->build($root, new Prompt($fields, $consent));

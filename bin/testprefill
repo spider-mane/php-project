@@ -1,9 +1,9 @@
 #!/usr/bin/env php
 <?php
 
-ini_set('xdebug.var_display_max_depth', 10);
-ini_set('xdebug.var_display_max_children', 256);
-ini_set('xdebug.var_display_max_data', 1024);
+use Faker\Factory;
+
+require_once dirname(__DIR__) . '/tests/bootstrap.php';
 
 ################################################################################
 # Config
@@ -22,6 +22,7 @@ $exclude = array_merge(
     'assets/node_modules',
     'assets/package-lock.json',
     'build',
+    'logs',
     'composer.lock',
     'vendor',
   ],
@@ -29,36 +30,53 @@ $exclude = array_merge(
   glob("**/*.code-workspace"),
 );
 
+$fake = Factory::create();
+
 $answers = [
-  'authorName' => 'Method Man',
-  'authorEmail' => 'methodman@wutangfinancial.wu',
-  'authorGithub' => 'fake-method-man-420',
+  'authorName' => $fake->name(),
+  'authorEmail' => $fake->email(),
+  'authorGithub' => $fake->slug(1),
 
-  'packageName' => 'tical',
-  'packageWebsite' => 'https://github.com/method-man-420/tical',
-  'packageDescription' => "Straight from the brain, I'll be giving you the pain, anger! Coming from the 36th Chamber, bang!",
+  'packageName' => $fake->slug(1),
+  'packageWebsite' => $fake->url(),
+  'packageDescription' => $fake->sentence(),
 
-  'psr4Namespace' => "MethodMan\\Tical",
+  'psr4Namespace' => ucwords("{$fake->word()}\\{$fake->word()}", '\\')
 ];
 
 ################################################################################
-# Functions (as closures to avoid potential collisions with prefill script)
+# Run
 ################################################################################
-$copyContents = function (
-  string $dir,
-  string $copyDir,
-  array $exclude = [],
-  ?string $sub = null
-) use (&$copyContents): void {
+$exclude = array_map(fn ($file) => "{$root}/{$file}", $exclude);
+// $answers = implode('\n', $answers);
+
+if (file_exists($testDir)) {
+  shell_exec("chmod -R 777 $testDir && rm -rf -f $testDir");
+}
+
+mkdir($testDir, 0777, true);
+
+__testprefill_copy_files($root, $testDir, $exclude);
+
+chdir($testDir);
+
+(function ($__prefill__, $__answers__) {
+  extract($__answers__);
+  shell_exec('composer dumpautoload');
+  require $__prefill__;
+})($prefill, $answers);
+
+################################################################################
+# Functions
+################################################################################
+function __testprefill_copy_files(string $dir, string $copyDir, array $exclude = [], string $sub = null): void
+{
   $currentDir = $sub ?? $dir;
 
-  $files = array_filter(scandir($currentDir), function ($file) {
-    return !in_array($file, ['.', '..']);
-  });
-
-  foreach ($files as $file) {
-    $file = "$currentDir/$file";
-    $copy = $copyDir . '/' . str_replace("$dir", '', $file);
+  foreach (new FilesystemIterator($currentDir) as $file) {
+    $newPath = str_replace($dir, $copyDir, $file->getPath());
+    $copy = $newPath . '/' . $file->getBasename();
+    $file = $file->getPathname();
 
     if (in_array($file, $exclude)) {
       continue;
@@ -66,7 +84,7 @@ $copyContents = function (
 
     if (is_dir($file)) {
       mkdir($copy);
-      $copyContents($dir, $copyDir, $exclude, $file);
+      __testprefill_copy_files($dir, $copyDir, $exclude, $file);
 
       continue;
     }
@@ -74,24 +92,3 @@ $copyContents = function (
     copy($file, $copy);
   }
 };
-
-################################################################################
-# Run
-################################################################################
-$exclude = array_map(function ($file) use ($root) {
-  return "$root/$file";
-}, $exclude);
-
-if (file_exists($testDir)) {
-  shell_exec("chmod -R 777 $testDir && rm -rf -f $testDir");
-}
-mkdir($testDir, 0777, true);
-$copyContents($root, $testDir, $exclude);
-
-chdir($testDir);
-
-// Limit exposure! With an immediately invoked closure.
-(function ($__prefill__, $__answers__) {
-  extract($__answers__);
-  require $__prefill__;
-})($prefill, $answers);

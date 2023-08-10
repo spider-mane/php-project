@@ -17,7 +17,7 @@
   ],
   "autoload": {
     "psr-4": {
-      "PseudoVendor\\PseudoPackage\\": "src/"
+      ":psr4_namespace": "src/"
     }
   }
 }

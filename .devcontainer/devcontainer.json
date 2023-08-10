@@ -6,6 +6,7 @@
     "../docker-compose.override.yml"
   ],
   "service": "app",
+  "remoteUser": "php-project",
   "workspaceFolder": "/app",
   "shutdownAction": "none"
 }
