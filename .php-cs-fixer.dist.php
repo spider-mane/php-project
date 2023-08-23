@@ -5,9 +5,15 @@ use PhpCsFixer\Finder;
 
 $finder = Finder::create()
     ->in(['src', 'tests', 'bin'])
-    ->exclude(['build', 'vendor'])
     ->name('*.php')
-    ->append([basename(__FILE__)])
+    ->append([
+        basename(__FILE__),
+        './bin/composer-prefill',
+        './bin/prefill',
+        './bin/testprefill',
+        './bin/testproject',
+        './prefill',
+    ])
     ->ignoreDotFiles(true)
     ->ignoreVCS(true);
 

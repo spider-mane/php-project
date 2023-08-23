@@ -1,6 +1,6 @@
 // For format details, see https://aka.ms/devcontainer.json.
 {
-  "name": ":package_name",
+  "name": "php-project",
   "dockerComposeFile": [
     "../docker-compose.yml",
     "../docker-compose.override.yml"

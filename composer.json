@@ -31,6 +31,7 @@
     "behat/behat": "^3.13",
     "brainmaestro/composer-git-hooks": "^2.8.5",
     "captainhook/captainhook": "^5.16.4",
+    "dealerdirect/phpcodesniffer-composer-installer": "^0.7.2",
     "fakerphp/faker": "^1.23",
     "filp/whoops": "^2.15.2",
     "friendsofphp/php-cs-fixer": "^3.17",
@@ -55,19 +56,21 @@
     "rector/rector": "^0.17.1",
     "spatie/phpunit-watcher": "^1.23.6",
     "squizlabs/php_codesniffer": "^3.7.2",
+    "suin/phpcs-psr4-sniff": "^3.0",
     "symfony/error-handler": "^5.0 || ^6.0.19",
     "symfony/thanks": "^1.2.10",
     "symfony/var-dumper": "^5.0 || ^6.0.19",
     "vimeo/psalm": "^5.12",
     "vlucas/phpdotenv": "^5.5",
+    "webtheory/erector": "@dev",
+    "webtheory/exterminate": "@dev",
     "webtheory/path-builder": "@dev",
-    "webtheory/playground": "@dev",
-    "webtheory/exterminate": "@dev"
+    "webtheory/playground": "@dev"
   },
   "autoload": {
     "psr-4": {
       "PseudoVendor\\PseudoPackage\\": "src/",
-      "WebTheory\\Prefill\\": "lib"
+      "WebTheory\\Prefill\\": "lib/"
     }
   },
   "autoload-dev": {
@@ -103,6 +106,10 @@
       "@spec",
       "@review"
     ],
+    "build:fix": [
+      "@style",
+      "@build"
+    ],
     "setup": [
       "composer install",
       "cp -n .env.example .env",
@@ -128,13 +135,15 @@
       "composer/installers": true,
       "composer/package-versions-deprecated": true,
       "phpstan/extension-installer": true,
-      "symfony/thanks": true
+      "symfony/thanks": true,
+      "dealerdirect/phpcodesniffer-composer-installer": true
     }
   },
   "extra": {
     "build-paths": {
       "build": {
         "php-cs-fixer": {},
+        "phpcs": {},
         "phpstan": {},
         "phpunit": {},
         "psalm": {}

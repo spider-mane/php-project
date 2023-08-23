@@ -26,15 +26,15 @@ $stability = isset($options['s']) ? 'stable' : 'dev';
 $args[] = "--stability $stability";
 
 if (!isset($options['x'])) {
-  $args[] = '--no-scripts';
+    $args[] = '--no-scripts';
 }
 if (!isset($options['i'])) {
-  $args[] = '--no-install';
+    $args[] = '--no-install';
 }
 
 $args = implode(' ', $args);
 
 if (file_exists($testDir)) {
-  shell_exec("chmod -R 777 $testDir && rm -rf -f $testDir");
+    shell_exec("chmod -R 777 $testDir && rm -rf -f $testDir");
 }
 shell_exec("composer create-project $project $testDir $args");

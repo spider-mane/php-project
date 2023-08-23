@@ -11,7 +11,7 @@ indent_style = space
 insert_final_newline = true
 trim_trailing_whitespace = true
 
-[*.php]
+[{*.php,**prefill**,bin/testproject}]
 indent_size = 4
 
 [*.{html,json,twig,blade.php,phtml}]

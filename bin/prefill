@@ -1,31 +1,29 @@
 #!/usr/bin/env php
 <?php
 
-use WebTheory\Prefill\Action\AutoloadDumper;
-use WebTheory\Prefill\Action\ActionCallback;
-use WebTheory\Prefill\Action\DirectoryKeeper;
-use WebTheory\Prefill\Action\FileCopier;
-use WebTheory\Prefill\Action\FilenameChanger;
-use WebTheory\Prefill\Builder;
-use WebTheory\Prefill\Action\FileRemover;
-use WebTheory\Prefill\Action\FileTransformer;
-use WebTheory\Prefill\Action\GitInitiator;
-use WebTheory\Prefill\Action\Message;
-use WebTheory\Prefill\BaseResolver;
-use WebTheory\Prefill\CallableReplacements;
-use WebTheory\Prefill\Prompt;
-use WebTheory\Prefill\Transformation\TransformationCallback;
-use WebTheory\Prefill\Transformation\JsonMerger;
-use WebTheory\Prefill\Transformation\TextReplacer;
-
-require_once dirname(__DIR__) . '/tests/bootstrap.php';
-
-################################################################################
-# Data
-################################################################################
+use Laravel\Prompts\TextPrompt;
+use WebTheory\Erector\Action\AutoloadDumper;
+use WebTheory\Erector\Action\DirectoryKeeper;
+use WebTheory\Erector\Action\FileCopier;
+use WebTheory\Erector\Action\FilenameChanger;
+use WebTheory\Erector\Action\FileRemover;
+use WebTheory\Erector\Action\FileTransformer;
+use WebTheory\Erector\Action\GitInitiator;
+use WebTheory\Erector\Action\Message;
+use WebTheory\Erector\BaseResolver;
+use WebTheory\Erector\Builder;
+use WebTheory\Erector\CallableReplacements;
+use WebTheory\Erector\LaravelPrompt;
+use WebTheory\Erector\Transformation\JsonMerger;
+use WebTheory\Erector\Transformation\TextReplacer;
 
 $root = dirname(__DIR__, 1);
-$stubs = $root . '/__prefill__';
+
+require_once $root . '/tests/bootstrap.php';
+
+################################################################################
+# Prompt Setup
+################################################################################
 
 // allow defaults to be passed to script for testing
 $authorName = $authorName ?? trim(shell_exec('git config user.name'));
@@ -36,101 +34,107 @@ $authorGithub = $authorGithub ?? '';
 $packageDescription = $packageDescription ?? '';
 $psr4Namespace = $psr4Namespace ?? '';
 
-$fields = [
-  'author_name' => ['Your name', '', $authorName],
-  'author_email' => ['Your email address', '', $authorEmail],
-  'author_github_username' => ['Your Github username', '<username> in https://github.com/username', $authorGithub],
-  'author_website' => ['Your website', '', 'https://github.com/{author_github_username}'],
+$fields =  [
+    'author_name' => new TextPrompt('Your name', '', $authorName),
+    'author_email' => new TextPrompt('Your email address', '', $authorEmail),
+    'author_github_username' => new TextPrompt('Your Github username', '<username> in https://github.com/username', $authorGithub),
+    'author_website' => new TextPrompt('Your website', '', 'https://github.com/{author_github_username}'),
 
-  'vendor_name' => ['Vendor name', '', '{author_github_username}'],
-  'vendor_github' => ['Vendor Github username', '<username> in https://github.com/username', '{vendor_name}'],
-  'vendor_website' => ['Vendor website', '', 'https://github.com/{vendor_name}'],
+    'vendor_name' => new TextPrompt('Vendor name', '', '{author_github_username}'),
+    'vendor_github' => new TextPrompt('Vendor Github username', '<username> in https://github.com/username', '{vendor_name}'),
+    'vendor_website' => new TextPrompt('Vendor website', '', 'https://github.com/{vendor_name}'),
 
-  'package_name' => ['Package name', '', $packageName],
-  'package_website' => ['Package website', '', 'https://github.com/{vendor_github}/{package_name}'],
-  'package_description' => ['Brief description of package', '', $packageDescription],
+    'package_name' => new TextPrompt('Package name', '', $packageName),
+    'package_website' => new TextPrompt('Package website', '', 'https://github.com/{vendor_github}/{package_name}'),
+    'package_description' => new TextPrompt('Brief description of package', '', $packageDescription),
 
-  'psr4_namespace' => ['PSR-4 namespace', 'Vendor\\Package', $psr4Namespace],
+    'psr4_namespace' => new TextPrompt('PSR-4 namespace', 'Vendor\\Package', $psr4Namespace),
 ];
 
 $consent = 'Modify files with these values and create new git repository?';
 
+################################################################################
+# Configurations
+################################################################################
+
+$stubs = $root . '/__prefill__';
+
 // files to transform
 $boilerplate = array_merge(
-  // general boilerplate
-  glob($stubs . '/*'),
-  array_map(fn ($file) => $root . $file, [
-    '/.devcontainer/devcontainer.json',
-    '/bin/apprun',
-    '/bin/enterapp',
-    '/docker-compose.override.example.yml',
-    '/docker/php/Dockerfile',
-  ]),
-  ...array_map(fn ($file) => glob($root . $file), [
-    '/src/*.php',
-  ]),
+    glob($stubs . '/*'),
+    array_map(fn ($file) => $root . $file, [
+        '/.devcontainer/devcontainer.json',
+        '/.mailmap',
+        '/bin/apprun',
+        '/bin/enterapp',
+        '/docker-compose.override.example.yml',
+        '/docker/php/Dockerfile',
+    ]),
+    ...array_map(fn ($file) => glob($root . $file), [
+        '/src/*.php',
+    ]),
 );
 
 // files whose output target does not correspond to its own relative path
 $locations = [
-  'package.json' => 'assets'
+    'package.json' => 'assets',
 ];
 
 // files where user input needs to be further refined
 $filters = [];
 
 $replacements = [
-  # text
-  'PseudoVendor\\PseudoPackage' => 'psr4_namespace',
-  'pseudo-package' => 'package_name',
-  'php-project' => 'package_name',
+    # text
+    'PseudoVendor\\PseudoPackage' => 'psr4_namespace',
+    'pseudo-package' => 'package_name',
+    'php-project' => 'package_name',
 
-  # placeholders
-  ':package_name' => 'package_name',
-  ':package_website' => 'package_website',
-  ':package_description' => 'package_description',
-  ':package_author' => 'author_name',
-  ':author_username' => 'author_github_username',
-  ':author_website' => 'author_website',
-  ':author_email' => 'author_email',
-  ':vendor_name' => 'vendor_name',
-  ':vendor_github' => 'vendor_github',
-  ':vendor_website' => 'vendor_website',
-  ':psr4_namespace' => fn ($values) => str_replace('\\', '\\\\', $values['psr4_namespace']) . '\\\\',
-  ':system_year' => fn () => date('Y'),
+    # placeholders
+    ':package_name' => 'package_name',
+    ':package_website' => 'package_website',
+    ':package_description' => 'package_description',
+    ':package_author' => 'author_name',
+    ':author_username' => 'author_github_username',
+    ':author_website' => 'author_website',
+    ':author_email' => 'author_email',
+    ':vendor_name' => 'vendor_name',
+    ':vendor_github' => 'vendor_github',
+    ':vendor_website' => 'vendor_website',
+    ':psr4_namespace' => fn ($values) => str_replace('\\', '\\\\', $values['psr4_namespace']) . '\\\\',
+    ':system_year' => fn () => date('Y'),
 ];
 
 // json files whose contents should be merged with a functional counterpart
 $json = [
-  'composer.json' => function (object $base, array $stub): array {
-    $composer = array_replace_recursive((array) $base,  $stub);
+    'composer.json' => function (array $base, array $stub): array {
+        $composer = array_replace_recursive($base, $stub);
 
-    $composer['authors'] = $stub['authors'];
-    $composer['keywords'] = $stub['keywords'];
-    $composer['autoload']['psr-4'] = $stub['autoload']['psr-4'];
+        $composer['authors'] = $stub['authors'];
+        $composer['keywords'] = $stub['keywords'];
+        $composer['autoload']['psr-4'] = $stub['autoload']['psr-4'];
 
-    $scripts = (array) $composer['scripts'];
+        $scripts = $composer['scripts'];
 
-    unset(
-      $scripts['post-create-project-cmd'],
-      $scripts['fill']
-    );
+        unset(
+            $scripts['post-create-project-cmd'],
+            $scripts['fill']
+        );
 
-    $composer['scripts'] = $scripts;
+        $composer['scripts'] = $scripts;
 
-    return $composer;
-  },
-  'assets/package.json' => function (object $base, array $stub): array {
-    $package = array_replace_recursive((array) $base, (array) $stub);
+        return $composer;
+    },
+    'assets/package.json' => function (array $base, array $stub): array {
+        $package = array_replace_recursive($base, $stub);
 
-    return $package;
-  }
+        return $package;
+    },
 ];
 
 // files to rename
 $rename = [
-  '.example.gitattributes' => fn () => '.gitattributes',
-  'assets/.example.gitattributes' => fn () => '.gitattributes',
+    '.example.gitattributes' => fn () => '.gitattributes',
+    'assets/.example.gitattributes' => fn () => '.gitattributes',
 ];
 
 // files to copy to root directory
@@ -138,22 +142,20 @@ $copy = [];
 
 // files to delete
 $remove = [
-  '__prefill__',
-  'bin/composer-prefill',
-  'bin/prefill',
-  'bin/testprefill',
-  'bin/testproject',
-  'bin/.gitattributes',
-  'prefill',
+    '__prefill__',
+    'bin/composer-prefill',
+    'bin/prefill',
+    'bin/testprefill',
+    'bin/testproject',
+    'bin/.gitattributes',
+    'prefill',
 ];
 
 $keep = [
-  'bin',
+    'bin',
 ];
 
 $message = "Done! \e[1;37;44m#StandWith\e\e[0;30;43mUkraine\e[0m\n";
-
-$library = 'lib';
 
 ################################################################################
 # Process
@@ -163,21 +165,20 @@ $replacements = new CallableReplacements($replacements);
 $baseResolver = new BaseResolver($locations, $root, $stubs);
 
 $builder = new Builder(
-  new FileTransformer(
-    $boilerplate,
-    $filters,
-    $baseResolver,
-    new TextReplacer($replacements),
-    new JsonMerger($root, $json),
-  ),
-  new FilenameChanger(new CallableReplacements($rename)),
-  new GitInitiator(),
-  new AutoloadDumper(),
-  new FileRemover(...$remove),
-  new FileCopier(...$copy),
-  new DirectoryKeeper(...$keep),
-  new Message($message),
-  new FileRemover($library)
+    new GitInitiator(),
+    new FileTransformer(
+        $boilerplate,
+        $filters,
+        $baseResolver,
+        new TextReplacer($replacements),
+        new JsonMerger($root, $json),
+    ),
+    new FilenameChanger(new CallableReplacements($rename)),
+    new AutoloadDumper(),
+    new FileRemover(...$remove),
+    new FileCopier(...$copy),
+    new DirectoryKeeper(...$keep),
+    new Message($message)
 );
 
-$builder->build($root, new Prompt($fields, $consent));
+$builder->build($root, new LaravelPrompt($fields, $consent));

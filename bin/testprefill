@@ -13,35 +13,35 @@ $testDir = $root . '/build/test-prefill';
 $prefill = $testDir . '/bin/prefill';
 
 $exclude = array_merge(
-  [
-    '.idea',
-    '.project',
-    '.vscode',
-    'assets/build',
-    'assets/dist',
-    'assets/node_modules',
-    'assets/package-lock.json',
-    'build',
-    'logs',
-    'composer.lock',
-    'vendor',
-  ],
-  glob("*.code-workspace"),
-  glob("**/*.code-workspace"),
+    [
+        '.idea',
+        '.project',
+        '.vscode',
+        'assets/build',
+        'assets/dist',
+        'assets/node_modules',
+        'assets/package-lock.json',
+        'build',
+        'logs',
+        'composer.lock',
+        'vendor',
+    ],
+    glob("*.code-workspace"),
+    glob("**/*.code-workspace"),
 );
 
 $fake = Factory::create();
 
 $answers = [
-  'authorName' => $fake->name(),
-  'authorEmail' => $fake->email(),
-  'authorGithub' => $fake->slug(1),
+    'authorName' => $fake->name(),
+    'authorEmail' => $fake->email(),
+    'authorGithub' => $fake->slug(1),
 
-  'packageName' => $fake->slug(1),
-  'packageWebsite' => $fake->url(),
-  'packageDescription' => $fake->sentence(),
+    'packageName' => $fake->slug(1),
+    'packageWebsite' => $fake->url(),
+    'packageDescription' => $fake->sentence(),
 
-  'psr4Namespace' => ucwords("{$fake->word()}\\{$fake->word()}", '\\')
+    'psr4Namespace' => ucwords("{$fake->word()}\\{$fake->word()}", '\\'),
 ];
 
 ################################################################################
@@ -51,19 +51,18 @@ $exclude = array_map(fn ($file) => "{$root}/{$file}", $exclude);
 // $answers = implode('\n', $answers);
 
 if (file_exists($testDir)) {
-  shell_exec("chmod -R 777 $testDir && rm -rf -f $testDir");
+    shell_exec("rm -rf {$testDir}");
 }
 
 mkdir($testDir, 0777, true);
-
 __testprefill_copy_files($root, $testDir, $exclude);
-
 chdir($testDir);
 
 (function ($__prefill__, $__answers__) {
-  extract($__answers__);
-  shell_exec('composer dumpautoload');
-  require $__prefill__;
+    extract($__answers__);
+    shell_exec('composer dumpautoload');
+
+    require $__prefill__;
 })($prefill, $answers);
 
 ################################################################################
@@ -71,24 +70,24 @@ chdir($testDir);
 ################################################################################
 function __testprefill_copy_files(string $dir, string $copyDir, array $exclude = [], string $sub = null): void
 {
-  $currentDir = $sub ?? $dir;
+    $currentDir = $sub ?? $dir;
 
-  foreach (new FilesystemIterator($currentDir) as $file) {
-    $newPath = str_replace($dir, $copyDir, $file->getPath());
-    $copy = $newPath . '/' . $file->getBasename();
-    $file = $file->getPathname();
+    foreach (new FilesystemIterator($currentDir) as $file) {
+        $newPath = str_replace($dir, $copyDir, $file->getPath());
+        $copy = $newPath . '/' . $file->getBasename();
+        $file = $file->getPathname();
 
-    if (in_array($file, $exclude)) {
-      continue;
+        if (in_array($file, $exclude)) {
+            continue;
+        }
+
+        if (is_dir($file)) {
+            mkdir($copy);
+            __testprefill_copy_files($dir, $copyDir, $exclude, $file);
+
+            continue;
+        }
+
+        copy($file, $copy);
     }
-
-    if (is_dir($file)) {
-      mkdir($copy);
-      __testprefill_copy_files($dir, $copyDir, $exclude, $file);
-
-      continue;
-    }
-
-    copy($file, $copy);
-  }
 };
